@@ -83,7 +83,7 @@ public class MainCordinator {
                 = new SearchProductsController(new FrmSearchProducts(mainController.getFrmMain(), true));
         searchProductsController.openForm();
     }
-
+    
     public void openProductDetailsForm() {
         productController = new ProductController(new FrmProduct(mainController.getFrmMain(), true));
         productController.openForm(FormMode.FORM_DETAIL);

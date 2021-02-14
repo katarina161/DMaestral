@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.form;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -47,6 +48,10 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         cmbFilter = new javax.swing.JComboBox<>();
         btnSearch = new javax.swing.JButton();
         btnCancelFilter = new javax.swing.JButton();
+        txtSearchPartner = new javax.swing.JTextField();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         tblScroll = new javax.swing.JScrollPane();
         tblInvoices = new javax.swing.JTable();
         btnDetails = new javax.swing.JButton();
@@ -78,6 +83,25 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         btnCancelFilter.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelFilter.setText("Cancel Filter");
 
+        txtSearchPartner.setBackground(new java.awt.Color(101, 149, 224));
+        txtSearchPartner.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        txtSearchPartner.setForeground(new java.awt.Color(255, 255, 255));
+        txtSearchPartner.setBorder(null);
+        txtSearchPartner.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        jDateChooser.setBackground(new java.awt.Color(101, 149, 224));
+        jDateChooser.setForeground(new java.awt.Color(255, 255, 255));
+        jDateChooser.setDateFormatString("dd.MM.yyyy.");
+        jDateChooser.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+
+        jLabel1.setBackground(new java.awt.Color(101, 149, 224));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Invoice number");
+
+        jLabel2.setBackground(new java.awt.Color(101, 149, 224));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Partner");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -86,29 +110,53 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(lblSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSearchNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addComponent(btnCancelFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(txtSearchNumber))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtSearchPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCancelFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel2))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearchNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSearchNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchPartner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFilter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelFilter)
+                .addGap(82, 82, 82))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch)
-                    .addComponent(btnCancelFilter))
-                .addContainerGap())
+                    .addComponent(btnSearch))
+                .addGap(13, 13, 13))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnSearch, cmbFilter, txtSearchNumber});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelFilter, btnSearch, cmbFilter, txtSearchNumber});
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jDateChooser, txtSearchPartner});
 
         tblInvoices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -177,16 +225,21 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
     private javax.swing.JButton btnDetails;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<Object> cmbFilter;
+    private com.toedter.calendar.JDateChooser jDateChooser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblSearch;
     private javax.swing.JTable tblInvoices;
     private javax.swing.JScrollPane tblScroll;
     private javax.swing.JTextField txtSearchNumber;
+    private javax.swing.JTextField txtSearchPartner;
     // End of variables declaration//GEN-END:variables
 
     private void prepareView() {
         txtSearchNumber.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
+        txtSearchPartner.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.white));
         cmbFilter.setRenderer(new DefaultListCellRenderer() {
             @Override
             public void paint(Graphics g) {
@@ -219,4 +272,19 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         btnDetails.addActionListener(actionListener);
     }
 
+    public JDateChooser getjDateChooser() {
+        return jDateChooser;
+    }
+
+    public void btnSearchAddActionListener(ActionListener actionListener) {
+        btnSearch.addActionListener(actionListener);
+    }
+
+    public JTextField getTxtSearchPartner() {
+        return txtSearchPartner;
+    }
+
+    public void btnCancelFilterAddActionListener(ActionListener actionListener) {
+        btnCancelFilter.addActionListener(actionListener);
+    }
 }

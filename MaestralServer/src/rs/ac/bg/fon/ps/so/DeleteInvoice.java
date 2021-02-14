@@ -5,8 +5,6 @@
  */
 package rs.ac.bg.fon.ps.so;
 
-import java.util.Arrays;
-import java.util.List;
 import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;
 
@@ -14,34 +12,30 @@ import rs.ac.bg.fon.ps.domain.InvoiceItem;
  *
  * @author Katarina
  */
-public class UpdateInvoice extends AbstractSystemOperation{
+public class DeleteInvoice extends AbstractSystemOperation{
     
     private Invoice invoice;
 
-    public UpdateInvoice(Invoice invoice) {
+    public DeleteInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
 
     @Override
     protected void checkPreconditions() throws Exception {
+        if (repository.getByPrimaryKey(new Invoice(), invoice.getId()) == null) {
+            throw new Exception("This invoice is already deleted!");
+        }
+        if (invoice.isProcessed()) {
+            throw new Exception("You cannot delete an invoice if it's already processed.\nYou can only cancel it.");
+        }
     }
 
     @Override
     protected void executeSpecificOperation() throws Exception {
-        List<InvoiceItem> dbItems 
-                = (List<InvoiceItem>) repository.getAll(new InvoiceItem(), Arrays.asList("invoice_id"), Arrays.asList(invoice.getId()));
-        for (InvoiceItem item: dbItems) {
+        for (InvoiceItem item: invoice.getItems()) {
             repository.delete(item);
         }
-        
-        repository.update(invoice);
-        for (InvoiceItem item: invoice.getItems()) {
-            repository.add(item);
-        }
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
+        repository.delete(invoice);
     }
     
 }

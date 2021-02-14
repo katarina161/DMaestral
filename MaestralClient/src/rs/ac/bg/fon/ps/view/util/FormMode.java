@@ -10,5 +10,5 @@ package rs.ac.bg.fon.ps.view.util;
  * @author Katarina
  */
 public enum FormMode {
-    FORM_ADD, FORM_DETAIL, FORM_CANCEL, FORM_SAVED, FORM_PROCESSED
+    FORM_ADD, FORM_DETAIL
 }

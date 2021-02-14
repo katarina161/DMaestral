@@ -28,13 +28,17 @@ import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbUser;
 import rs.ac.bg.fon.ps.so.AbstractSystemOperation;
 import rs.ac.bg.fon.ps.so.AddInvoice;
 import rs.ac.bg.fon.ps.so.AddProduct;
+import rs.ac.bg.fon.ps.so.CancelInvoice;
+import rs.ac.bg.fon.ps.so.DeleteInvoice;
 import rs.ac.bg.fon.ps.so.DeleteProduct;
 import rs.ac.bg.fon.ps.so.GenerateInvoiceNumber;
 import rs.ac.bg.fon.ps.so.GetAllCategories;
 import rs.ac.bg.fon.ps.so.GetAllInvoices;
 import rs.ac.bg.fon.ps.so.GetAllProducts;
 import rs.ac.bg.fon.ps.so.GetAllSizes;
+import rs.ac.bg.fon.ps.so.GetFilteredInvoices;
 import rs.ac.bg.fon.ps.so.LogIn;
+import rs.ac.bg.fon.ps.so.ProcessInvoice;
 import rs.ac.bg.fon.ps.so.UpdateInvoice;
 import rs.ac.bg.fon.ps.so.UpdateProduct;
 import rs.ac.bg.fon.ps.thread.ClientThread;
@@ -183,5 +187,26 @@ public class Controller {
     public void updateInvoice(Invoice invoice) throws Exception{
         AbstractSystemOperation so = new UpdateInvoice(invoice);
         so.executeOperation();
+    }
+
+    public void processInvoice(Invoice invoice) throws Exception{
+        AbstractSystemOperation so = new ProcessInvoice(invoice);
+        so.executeOperation();
+    }
+
+    public void deleteInvoice(Invoice invoice) throws Exception {
+        AbstractSystemOperation so = new DeleteInvoice(invoice);
+        so.executeOperation();
+    }
+
+    public void cancelInvoice(Invoice invoice) throws Exception {
+        AbstractSystemOperation so = new CancelInvoice(invoice);
+        so.executeOperation();
+    }
+
+    public List<Invoice> getFilteredInvoices(List<String> columns, List<Object> values) throws Exception {
+        AbstractSystemOperation so = new GetFilteredInvoices(columns, values);
+        so.executeOperation();
+        return ((GetFilteredInvoices) so).getInvoices();
     }
 }

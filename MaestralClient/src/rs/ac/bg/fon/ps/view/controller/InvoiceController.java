@@ -171,6 +171,64 @@ public class InvoiceController {
                 }
             }
         });
+
+        frmInvoice.btnProcessAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                processInvoice();
+            }
+
+            private void processInvoice() {
+                try {
+                    int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                            "Are you sure you want to process invoice?\n"
+                            + "After that you won't be able to make any changes?",
+                            "Process invoice",
+                            JOptionPane.YES_NO_OPTION);
+                    if (answer == 0) {
+                        validateForm();
+
+                        Controller.getInstance().processInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
+                    }
+                } catch (InvalidFormException ex) {
+                    Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        frmInvoice.btnDeleteAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteInvoice();
+            }
+
+            private void deleteInvoice() {
+                int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                        "Are you sure you want to delete this invoice?",
+                        "Delete",
+                        JOptionPane.YES_NO_OPTION);
+                if (answer == 0) {
+                    Controller.getInstance().deleteInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
+                }
+            }
+        });
+
+        frmInvoice.btnCancelAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelInvoice();
+            }
+
+            private void cancelInvoice() {
+                int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                        "Are you sure you want to cancel this invoice?",
+                        "Exit",
+                        JOptionPane.YES_NO_OPTION);
+                if (answer == 0) {
+                    Controller.getInstance().cancelInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
+                }
+            }
+        });
     }
 
     public void openForm(FormMode formMode) {
@@ -181,13 +239,17 @@ public class InvoiceController {
     }
 
     private void closeForm() {
-        int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                "Are you sure you want to close this window, your changes won't be saved?",
-                "Exit",
-                JOptionPane.YES_NO_OPTION);
-        if (answer == 0) {
+        if (frmInvoice.getBtnSave().isVisible() || frmInvoice.getBtnEdit().isVisible()) {
+            int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                    "Are you sure you want to close this window, your changes won't be saved?",
+                    "Exit",
+                    JOptionPane.YES_NO_OPTION);
+            if (answer == 0) {
+                Controller.getInstance().refreshInvoicesView();
+                frmInvoice.dispose();
+            }
+        } else {
             frmInvoice.dispose();
-            Controller.getInstance().refreshInvoicesView();
         }
     }
 
@@ -439,6 +501,7 @@ public class InvoiceController {
     }
 
     public void saveInvoiceSuccess(Invoice invoice) {
+        Controller.getInstance().refreshInvoicesView();
         JOptionPane.showMessageDialog(frmInvoice,
                 "Invoice (id=" + invoice.getId() + ") successfully saved!",
                 "Success",
@@ -460,13 +523,46 @@ public class InvoiceController {
         frmInvoice.getTxtNumber().setText(generatedNUmber);
     }
 
-    public void updateSuccess() {
+    public void updateSuccess(Invoice invoice) {
         Controller.getInstance().refreshInvoicesView();
+        MainCordinator.getInstance().addParam(Constants.PARAM_INVOICE, invoice);
         JOptionPane.showMessageDialog(frmInvoice, "Invoice successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateFailed(String message) {
         JOptionPane.showMessageDialog(frmInvoice, "Error occured. Update invoice failed.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void processSuccess() {
+        ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setProcessed(true);
+        setupComponents(FormMode.FORM_DETAIL);
+        Controller.getInstance().refreshInvoicesView();
+        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully processed.", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void processFailed(String message) {
+        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Process invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void deleteSuccess() {
+        Controller.getInstance().refreshInvoicesView();
+        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        frmInvoice.dispose();
+    }
+
+    public void deleteFailed(String message) {
+        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Delete invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void cancelSuccess() {
+        ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setCanceld(true);
+        setupComponents(FormMode.FORM_DETAIL);
+        Controller.getInstance().refreshInvoicesView();
+        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully canceled.", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void cancelFailed(String message) {
+        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Cancel invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

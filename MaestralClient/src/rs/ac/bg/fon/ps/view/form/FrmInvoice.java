@@ -642,5 +642,17 @@ public class FrmInvoice extends javax.swing.JDialog {
     public void btnEditAddActionListener(ActionListener actionListener) {
         btnEdit.addActionListener(actionListener);
     }
+
+    public void btnProcessAddActionListener(ActionListener actionListener) {
+        btnProcess.addActionListener(actionListener);
+    }
+
+    public void btnDeleteAddActionListener(ActionListener actionListener) {
+        btnDelete.addActionListener(actionListener);
+    }
+
+    public void btnCancelAddActionListener(ActionListener actionListener) {
+        btnCancel.addActionListener(actionListener);
+    }
     
 }

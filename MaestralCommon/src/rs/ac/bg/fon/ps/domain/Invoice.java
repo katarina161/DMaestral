@@ -150,13 +150,13 @@ public class Invoice implements DomainObject, Serializable {
 
     @Override
     public String getParameterNames() {
-        return "id, number, partner, date, total, processed, canceled, user_id";
+        return "number, partner, date, total, processed, canceled, user_id";
     }
 
     @Override
     public String getParameterValues() {
-        return String.format("%s, '%s', '%s', '%s', %s, %s, %s, %s",
-                id, number, partner, new java.sql.Date(date.getTime()), total, processed, canceld, user.getId());
+        return String.format("'%s', '%s', '%s', %s, %s, %s, %s",
+                number, partner, new java.sql.Date(date.getTime()), total, processed, canceld, user.getId());
     }
 
     @Override
@@ -190,6 +190,8 @@ public class Invoice implements DomainObject, Serializable {
         sb.append("partner='").append(partner).append("'")
                 .append(", date='").append(new java.sql.Date(date.getTime())).append("'")
                 .append(", total=").append(total)
+                .append(", processed=").append(processed)
+                .append(", canceled=").append(canceld)
                 .append(", user_id=").append(user.getId());
         return sb.toString();
     }

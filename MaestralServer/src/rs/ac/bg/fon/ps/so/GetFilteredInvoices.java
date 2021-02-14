@@ -18,11 +18,15 @@ import rs.ac.bg.fon.ps.domain.Size;
  *
  * @author Katarina
  */
-public class GetAllInvoices extends AbstractSystemOperation {
-
+public class GetFilteredInvoices extends AbstractSystemOperation{
+    
+    private final List<String> columns;
+    private final List<Object> values;
     private List<Invoice> invoices;
 
-    public GetAllInvoices() {
+    public GetFilteredInvoices(List<String> columns, List<Object> values) {
+        this.columns = columns;
+        this.values = values;
         invoices = new ArrayList<>();
     }
 
@@ -32,7 +36,7 @@ public class GetAllInvoices extends AbstractSystemOperation {
 
     @Override
     protected void executeSpecificOperation() throws Exception {
-        List<Invoice> dbInvoices = (List<Invoice>) repository.getAll(new Invoice());
+        List<Invoice> dbInvoices = (List<Invoice>) repository.getAll(new Invoice(), columns, values);
         dbInvoices.forEach(invoice -> {
             if (invoice.getTotal().compareTo(BigDecimal.ZERO) == 1) {
                 invoices.add(invoice);
@@ -54,5 +58,5 @@ public class GetAllInvoices extends AbstractSystemOperation {
     public List<Invoice> getInvoices() {
         return invoices;
     }
-
+    
 }

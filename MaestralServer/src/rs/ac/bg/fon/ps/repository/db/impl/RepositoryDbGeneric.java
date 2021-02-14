@@ -107,7 +107,7 @@ public class RepositoryDbGeneric implements DbRepository<DomainObject> {
         if (object.getJoinCondition() != null) {
             sb.append(" ").append(object.getJoinCondition());
         }
-        sb.append(" WHERE ").append(object.getPrimaryKeyName()).append("=").append(primaryKey);
+        sb.append(" WHERE ").append(object.getAllias()).append(".").append(object.getPrimaryKeyName()).append("=").append(primaryKey);
         String query = sb.toString();
         System.out.println(query);
         Statement statement = connection.createStatement();

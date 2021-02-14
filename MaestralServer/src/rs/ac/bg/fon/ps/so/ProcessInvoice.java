@@ -5,39 +5,31 @@
  */
 package rs.ac.bg.fon.ps.so;
 
-import java.util.Arrays;
-import java.util.List;
 import rs.ac.bg.fon.ps.domain.Invoice;
-import rs.ac.bg.fon.ps.domain.InvoiceItem;
 
 /**
  *
  * @author Katarina
  */
-public class UpdateInvoice extends AbstractSystemOperation{
+public class ProcessInvoice extends AbstractSystemOperation{
     
     private Invoice invoice;
 
-    public UpdateInvoice(Invoice invoice) {
+    public ProcessInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
 
     @Override
     protected void checkPreconditions() throws Exception {
+        if (((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isProcessed()) {
+            throw new Exception("Invoice (" +invoice.getNumber()+ ") is already processed!");
+        }
     }
 
     @Override
     protected void executeSpecificOperation() throws Exception {
-        List<InvoiceItem> dbItems 
-                = (List<InvoiceItem>) repository.getAll(new InvoiceItem(), Arrays.asList("invoice_id"), Arrays.asList(invoice.getId()));
-        for (InvoiceItem item: dbItems) {
-            repository.delete(item);
-        }
-        
+        invoice.setProcessed(true);
         repository.update(invoice);
-        for (InvoiceItem item: invoice.getItems()) {
-            repository.add(item);
-        }
     }
 
     public Invoice getInvoice() {

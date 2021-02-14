@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 
 /**
@@ -48,8 +49,11 @@ public class FrmMain extends javax.swing.JFrame {
         setTitle("Maestral");
         setMinimumSize(new java.awt.Dimension(1048, 800));
 
+        lblImage.setFont(new java.awt.Font("Tahoma", 1, 53)); // NOI18N
+        lblImage.setForeground(new java.awt.Color(0, 0, 255));
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/teddy.png"))); // NOI18N
+        lblImage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblImage.setMinimumSize(new java.awt.Dimension(0, 0));
 
         menuMain.setPreferredSize(new java.awt.Dimension(125, 40));
@@ -174,4 +178,9 @@ public class FrmMain extends javax.swing.JFrame {
     public void jmiInvoiceSearchAddActionListener(ActionListener actionListener) {
         miInvoiceSearch.addActionListener(actionListener);
     }
+
+    public JLabel getLblImage() {
+        return lblImage;
+    }
+    
 }

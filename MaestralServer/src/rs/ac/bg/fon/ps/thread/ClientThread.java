@@ -108,6 +108,25 @@ public class ClientThread extends Thread {
                             response.setResult(refreshInvoices);
                             Controller.getInstance().informAllUsers(response);
                             break;
+                        case PROCESS_INVOICE:
+                            Invoice processInvoice = (Invoice) request.getArgument();
+                            Controller.getInstance().processInvoice(processInvoice);
+                            response.setResult(processInvoice);
+                            break;
+                        case DELETE_INVOICE:
+                            Invoice deleteInvoice = (Invoice) request.getArgument();
+                            Controller.getInstance().deleteInvoice(deleteInvoice);
+                            break;
+                        case CANCEL_INVOICE:
+                            Invoice cancelInvoice = (Invoice) request.getArgument();
+                            Controller.getInstance().cancelInvoice(cancelInvoice);
+                            break;
+                        case GET_FILTERED_INVOICES:
+                            List<String> columns = request.getColumns();
+                            List<Object> values = request.getValues();
+                            List<Invoice> filteredInvoices = Controller.getInstance().getFilteredInvoices(columns, values);
+                            response.setResult(filteredInvoices);
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

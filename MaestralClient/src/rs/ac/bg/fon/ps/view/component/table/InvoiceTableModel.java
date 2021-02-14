@@ -76,6 +76,7 @@ public class InvoiceTableModel extends AbstractTableModel{
 
     public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
+        fireTableDataChanged();
     }
     
 }

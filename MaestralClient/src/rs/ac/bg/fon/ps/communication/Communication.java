@@ -146,7 +146,7 @@ public class Communication extends Thread {
                         break;
                     case UPDATE_INVOICE:
                         if (response.getException() == null) {
-                            MainCordinator.getInstance().getInvoiceController().updateSuccess();
+                            MainCordinator.getInstance().getInvoiceController().updateSuccess((Invoice) response.getResult());
                         } else {
                             MainCordinator.getInstance().getInvoiceController().updateFailed(response.getMessage());
                             System.err.println(response.getMessage());
@@ -159,6 +159,38 @@ public class Communication extends Thread {
                             } else {
                                 System.err.println(response.getMessage());
                             }
+                        }
+                        break;
+                    case PROCESS_INVOICE:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().processSuccess();
+                        } else {
+                            MainCordinator.getInstance().getInvoiceController().processFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case DELETE_INVOICE:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().deleteSuccess();
+                        } else {
+                            MainCordinator.getInstance().getInvoiceController().deleteFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case CANCEL_INVOICE:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().cancelSuccess();
+                        } else {
+                            MainCordinator.getInstance().getInvoiceController().cancelFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GET_FILTERED_INVOICES:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getSearchInvoicesController().setFilteredInvoices((List<Invoice>) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getSearchInvoicesController().filterInvoicesFailed(response.getMessage());
+                            System.err.println(response.getMessage());
                         }
                         break;
                 }

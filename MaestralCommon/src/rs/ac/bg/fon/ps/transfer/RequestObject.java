@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.transfer;
 
 import java.io.Serializable;
+import java.util.List;
 import rs.ac.bg.fon.ps.util.Operation;
 
 /**
@@ -16,6 +17,8 @@ public class RequestObject implements Serializable{
     
     private Operation operation;
     private Object argument;
+    private List<String> columns;
+    private List<Object> values;
 
     public RequestObject() {
     }
@@ -39,6 +42,22 @@ public class RequestObject implements Serializable{
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<String> columns) {
+        this.columns = columns;
+    }
+
+    public List<Object> getValues() {
+        return values;
+    }
+
+    public void setValues(List<Object> values) {
+        this.values = values;
     }
     
 }

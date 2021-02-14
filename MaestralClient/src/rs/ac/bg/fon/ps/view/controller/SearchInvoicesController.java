@@ -7,6 +7,9 @@ package rs.ac.bg.fon.ps.view.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +31,7 @@ public class SearchInvoicesController {
 
     private final FrmSearchInvoices frmSearchInvoices;
     private final FrmMain parent;
+    SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy.");
 
     public SearchInvoicesController(FrmSearchInvoices frmSearchInvoices) {
         this.frmSearchInvoices = frmSearchInvoices;
@@ -55,6 +59,73 @@ public class SearchInvoicesController {
                     MainCordinator.getInstance().addParam(Constants.PARAM_INVOICE, invoice);
                     MainCordinator.getInstance().openInvoiceDetailsForm();
                 }
+            }
+        });
+        
+        frmSearchInvoices.btnSearchAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filterInvoices();
+            }
+
+            private void filterInvoices() {
+                List<String> columns = new ArrayList<>();
+                List<Object> values = new ArrayList<>();
+                
+                String number = frmSearchInvoices.getTxtSearchNumber().getText().trim();
+                String partner = frmSearchInvoices.getTxtSearchPartner().getText().trim();
+                Date date = frmSearchInvoices.getjDateChooser().getDate();
+                InvoiceFilter status = (InvoiceFilter) frmSearchInvoices.getCmbFilter().getSelectedItem();
+                
+                if (!number.isEmpty()) {
+                    columns.add("number");
+                    values.add(number);
+                }
+                if (!partner.isEmpty()) {
+                    columns.add("partner");
+                    values.add(partner);
+                }
+                if (date!= null) {
+                    columns.add("date");
+                    values.add(new java.sql.Date(date.getTime()));
+                }
+                if (status != null) {
+                    switch (status) {
+                        case Canceled:
+                            columns.add("canceled");
+                            values.add(true);
+                            break;
+                        case Processed:
+                            columns.add("processed");
+                            values.add(true);
+                            break;
+                        case Unprocessed:
+                            columns.add("processed");
+                            values.add(false);
+                            break;
+                    }
+                }
+                
+                if (!columns.isEmpty()) {
+                    Controller.getInstance().getFilteredInvoices(columns, values);
+                } else {
+                    Controller.getInstance().refreshInvoicesView();
+                }
+            }
+        });
+        
+        frmSearchInvoices.btnCancelFilterAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelFilter();
+            }
+
+            private void cancelFilter() {
+                frmSearchInvoices.getTxtSearchNumber().setText("");
+                frmSearchInvoices.getTxtSearchPartner().setText("");
+                frmSearchInvoices.getjDateChooser().setCalendar(null);
+                frmSearchInvoices.getCmbFilter().setSelectedIndex(0);
+                Controller.getInstance().refreshInvoicesView();
             }
         });
     }
@@ -104,6 +175,15 @@ public class SearchInvoicesController {
     public void refreshInvoicesView(List<Invoice> invoices) {
         InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
         model.setInvoices(invoices);
+    }
+
+    public void setFilteredInvoices(List<Invoice> invoices) {
+        InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
+        model.setInvoices(invoices);
+    }
+
+    public void filterInvoicesFailed(String message) {
+        JOptionPane.showMessageDialog(frmSearchInvoices, "Error occurred while filtering.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -135,6 +136,36 @@ public class Controller {
     public void refreshInvoicesView() {
         RequestObject request = new RequestObject();
         request.setOperation(Operation.REFRESH_INVOICES);
+        communication.sendRequest(request);
+    }
+
+    public void processInvoice(Invoice invoice) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.PROCESS_INVOICE);
+        request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
+    public void deleteInvoice(Invoice invoice) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.DELETE_INVOICE);
+        request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
+    public void cancelInvoice(Invoice invoice) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.CANCEL_INVOICE);
+        request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
+    public void getFilteredInvoices(List<String> columns, List<Object> values) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GET_FILTERED_INVOICES);
+        request.setColumns(columns);
+        request.setColumns(columns);
+        request.setValues(values);
         communication.sendRequest(request);
     }
 
