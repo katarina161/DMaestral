@@ -26,9 +26,9 @@ import rs.ac.bg.fon.ps.util.Sender;
  */
 public class ClientThread extends Thread {
 
-    private Socket socket;
-    private Receiver receiver;
-    private Sender sender;
+    private final Socket socket;
+    private final Receiver receiver;
+    private final Sender sender;
     private boolean end = false;
 
     private User loggedUser;
@@ -94,6 +94,19 @@ public class ClientThread extends Thread {
                             Invoice saveInvoice = (Invoice) request.getArgument();
                             Controller.getInstance().saveInvoice(saveInvoice);
                             response.setResult(saveInvoice);
+                            break;
+                        case GENERATE_INVOICE_NUMBER:
+                            String generatedNum = Controller.getInstance().generateInvoiceNumber();
+                            response.setResult(generatedNum);
+                            break;
+                        case UPDATE_INVOICE:
+                            Invoice updateInvoice = (Invoice) request.getArgument();
+                            Controller.getInstance().updateInvoice(updateInvoice);
+                            break;
+                        case REFRESH_INVOICES:
+                            List<Invoice> refreshInvoices = Controller.getInstance().getAllInvoices();
+                            response.setResult(refreshInvoices);
+                            Controller.getInstance().informAllUsers(response);
                             break;
                     }
                 } catch (Exception e) {

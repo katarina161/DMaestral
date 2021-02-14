@@ -19,44 +19,44 @@ import rs.ac.bg.fon.ps.domain.Size;
  * @author Katarina
  */
 public class InvoiceItemTableModel extends AbstractTableModel {
-
+    
     private final String[] columnNames = new String[]{"Order No.", "Product", "Size", "Price", "Quantity"};
     private final Class[] columnClasses = new Class[]{Integer.class, Product.class, Size.class, BigDecimal.class, Integer.class};
     private Invoice invoice;
-
+    
     public InvoiceItemTableModel() {
         invoice = new Invoice();
     }
-
+    
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
     }
-
+    
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
-
+    
     @Override
     public int getRowCount() {
         return invoice.getItems().size();
     }
-
+    
     @Override
     public int getColumnCount() {
         return columnNames.length;
     }
-
+    
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 2 || columnIndex == 4;
+        return columnIndex == 4;
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         InvoiceItem item = invoice.getItems().get(rowIndex);
-
+        
         switch (columnIndex) {
             case 0:
                 return item.getOrderNumber();
@@ -72,34 +72,29 @@ public class InvoiceItemTableModel extends AbstractTableModel {
                 return "N/A";
         }
     }
-
+    
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        InvoiceItem item = invoice.getItems().get(rowIndex);
-
-        switch (columnIndex) {
-            case 2:
-                item.setSize((Size) value);
-                break;
-            case 4:
-                int quantity = (int) value;
-                if (quantity > 0) {
-                    item.setQuantity(quantity);
-                    item.setTotal(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
-                    updateInvoiceTotalPrice();
-                }
-                break;
+        if (columnIndex == 4) {
+            InvoiceItem item = invoice.getItems().get(rowIndex);
+            int quantity = (int) value;
+            if (quantity > 0) {
+                item.setQuantity(quantity);
+                item.setTotal(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+                updateInvoiceTotalPrice();
+            }
         }
+        
     }
-
+    
     public List<InvoiceItem> getItems() {
         return invoice.getItems();
     }
-
+    
     public Invoice getInvoice() {
         return invoice;
     }
-
+    
     public void addInvoiceItem(InvoiceItem itm) {
         InvoiceItem item = null;
         for (int i = 0; i < invoice.getItems().size(); i++) {
@@ -124,10 +119,10 @@ public class InvoiceItemTableModel extends AbstractTableModel {
         setOrderNumbers();
         updateInvoiceTotalPrice();
     }
-
+    
     private void setOrderNumbers() {
         int num = 0;
-        for (InvoiceItem item: invoice.getItems()) {
+        for (InvoiceItem item : invoice.getItems()) {
             item.setOrderNumber(++num);
         }
     }
@@ -140,9 +135,9 @@ public class InvoiceItemTableModel extends AbstractTableModel {
         invoice.setTotal(total);
         fireTableDataChanged();
     }
-
+    
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
-
+    
 }

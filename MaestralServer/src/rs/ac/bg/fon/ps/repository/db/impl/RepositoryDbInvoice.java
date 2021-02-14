@@ -5,7 +5,6 @@
  */
 package rs.ac.bg.fon.ps.repository.db.impl;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -64,7 +63,7 @@ public class RepositoryDbInvoice implements DbRepository<Invoice> {
     }
     
     @Override
-    public List<Invoice> getAll() throws Exception {
+    public List<Invoice> getAll(Invoice param) throws Exception {
         List<Invoice> invoices = new ArrayList<>();
         Connection connection = DbConnectionFactory.getInstance().getConnection();
         String query = "SELECT i.id, i.number, i.partner, i.date, i.total, i.processed, i.canceled, "
@@ -189,6 +188,16 @@ public class RepositoryDbInvoice implements DbRepository<Invoice> {
         statement.close();
         
         return c;
+    }
+
+    @Override
+    public List<Invoice> getAll(Invoice param, List<String> columns, List<Object> values) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Invoice getByPrimaryKey(Invoice param, Long primaryKey) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

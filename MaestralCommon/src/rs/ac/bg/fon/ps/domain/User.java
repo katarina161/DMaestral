@@ -6,14 +6,17 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Katarina
  */
-public class User implements Serializable{
-    
+public class User implements DomainObject, Serializable {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -32,7 +35,7 @@ public class User implements Serializable{
         this.password = password;
         this.administrator = administrator;
     }
-    
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -109,7 +112,7 @@ public class User implements Serializable{
             return false;
         }
         final User other = (User) obj;
-        
+
         if (!Objects.equals(this.username, other.username)) {
             return false;
         }
@@ -118,7 +121,74 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-        return firstName+ " " +lastName;
+        return firstName + " " + lastName;
     }
-    
+
+    @Override
+    public String getTableName() {
+        return "user";
+    }
+
+    @Override
+    public String getParameterNames() {
+        return "id, username, password, first_name, last_name, administrator";
+    }
+
+    @Override
+    public String getParameterValues() {
+        return String.format("%s, '%s', '%s', '%s', '%s', %s", id, username, password, firstName, lastName, administrator);
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return "id";
+    }
+
+    @Override
+    public Long getPrimaryKeyValue() {
+        return id;
+    }
+
+    @Override
+    public void setPrimaryKey(Long key) {
+        this.id = key;
+    }
+
+    @Override
+    public String getJoinCondition() {
+        return null;
+    }
+
+    @Override
+    public String getAllias() {
+        return "u";
+    }
+
+    @Override
+    public String getUpdateQuery() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(sb)
+        return null;
+    }
+
+    @Override
+    public List<DomainObject> convertRSList(ResultSet rs) {
+        List<DomainObject> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getLong("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                list.add(user);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR ResultSet " + getTableName());
+        }
+
+        return list;
+    }
+
 }

@@ -26,7 +26,7 @@ public class RepositoryDbSize implements DbRepository<Size> {
     }
 
     @Override
-    public List<Size> getAll() throws Exception {
+    public List<Size> getAll(Size param) throws Exception {
         List<Size> sizes = new ArrayList<>();
         
         String query = "SELECT id, number FROM size";
@@ -53,6 +53,16 @@ public class RepositoryDbSize implements DbRepository<Size> {
 
     @Override
     public void delete(Size param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Size> getAll(Size param, List<String> columns, List<Object> values) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Size getByPrimaryKey(Size param, Long primaryKey) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

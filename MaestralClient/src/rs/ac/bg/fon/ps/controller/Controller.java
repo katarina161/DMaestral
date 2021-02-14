@@ -119,4 +119,23 @@ public class Controller {
         communication.sendRequest(request);
     }
 
+    public void generateInvoiceNumber() {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GENERATE_INVOICE_NUMBER);
+        communication.sendRequest(request);
+    }
+
+    public void updateInvoice(Invoice invoice) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.UPDATE_INVOICE);
+        request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
+    public void refreshInvoicesView() {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.REFRESH_INVOICES);
+        communication.sendRequest(request);
+    }
+
 }

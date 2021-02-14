@@ -13,7 +13,9 @@ import java.util.List;
  */
 public interface Repository <T> {
     public void add(T param) throws Exception;
-    public List<T> getAll() throws Exception;
+    public List<T> getAll(T param) throws Exception;
+    public List<T> getAll(T param, List<String> columns, List<Object> values) throws Exception;
+    public T getByPrimaryKey(T param, Long primaryKey) throws Exception;
     public void update(T param) throws Exception;
     public void delete(T param) throws  Exception;
 }

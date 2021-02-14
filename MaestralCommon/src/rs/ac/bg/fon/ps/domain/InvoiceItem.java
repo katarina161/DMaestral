@@ -7,14 +7,17 @@ package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Katarina
  */
-public class InvoiceItem implements Serializable{
-    
+public class InvoiceItem implements DomainObject, Serializable {
+
     private Invoice invoice;
     private int orderNumber;
     private Product product;
@@ -122,5 +125,82 @@ public class InvoiceItem implements Serializable{
         return true;
     }
 
-    
+    @Override
+    public String getTableName() {
+        return "invoice_item";
+    }
+
+    @Override
+    public String getParameterNames() {
+        return "invoice_id, order_number, product_article, size_id, quantity, price, total";
+    }
+
+    @Override
+    public String getParameterValues() {
+        return String.format("%s, %s, %s, %s, %s, %s, %s",
+                invoice.getId(), orderNumber, product.getArticle(), size.getId(), quantity, price, total);
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return "invoice_id";
+    }
+
+    @Override
+    public Long getPrimaryKeyValue() {
+        return invoice.getId();
+    }
+
+    @Override
+    public void setPrimaryKey(Long key) {
+        this.invoice.setId(key);
+    }
+
+    @Override
+    public String getJoinCondition() {
+        return "JOIN invoice i ON i.id = ii.invoice_id";
+    }
+
+    @Override
+    public String getAllias() {
+        return "ii";
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return null;
+    }
+
+    @Override
+    public List<DomainObject> convertRSList(ResultSet rs) {
+        List<DomainObject> list = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                Invoice i = new Invoice();
+                i.setId(rs.getLong("i.id"));
+                
+                Product p = new Product();
+                p.setArticle(rs.getLong("ii.product_article"));
+                
+                Size s = new Size();
+                s.setId(rs.getLong("ii.size_id"));
+
+                InvoiceItem ii = new InvoiceItem();
+                ii.setInvoice(i);
+                ii.setOrderNumber(rs.getInt("ii.order_number"));
+                ii.setQuantity(rs.getInt("ii.quantity"));
+                ii.setPrice(rs.getBigDecimal("ii.price"));
+                ii.setTotal(rs.getBigDecimal("ii.total"));
+                ii.setProduct(p);
+                ii.setSize(s);
+                
+                list.add(ii);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERROR ResultSet " + getTableName());
+        }
+        return list;
+    }
+
 }

@@ -49,7 +49,7 @@ public class RepositoryDbProduct implements DbRepository<Product> {
     }
 
     @Override
-    public List<Product> getAll() throws Exception {
+    public List<Product> getAll(Product param) throws Exception {
         List<Product> products = new ArrayList<>();
 
         String query = "SELECT p.article, p.name, p.description, p.price, p.price_with_vat, c.id, c.name"
@@ -178,6 +178,16 @@ public class RepositoryDbProduct implements DbRepository<Product> {
             }
         }
 
+    }
+
+    @Override
+    public List<Product> getAll(Product param, List<String> columns, List<Object> values) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Product getByPrimaryKey(Product param, Long primaryKey) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

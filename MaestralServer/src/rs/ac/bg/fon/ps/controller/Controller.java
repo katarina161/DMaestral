@@ -18,8 +18,6 @@ import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
 import rs.ac.bg.fon.ps.domain.User;
-import rs.ac.bg.fon.ps.exception.IncorrectPasswordException;
-import rs.ac.bg.fon.ps.exception.UnknownUserException;
 import rs.ac.bg.fon.ps.repository.Repository;
 import rs.ac.bg.fon.ps.repository.db.DbRepository;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbCategory;
@@ -27,6 +25,18 @@ import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbInvoice;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbProduct;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbSize;
 import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbUser;
+import rs.ac.bg.fon.ps.so.AbstractSystemOperation;
+import rs.ac.bg.fon.ps.so.AddInvoice;
+import rs.ac.bg.fon.ps.so.AddProduct;
+import rs.ac.bg.fon.ps.so.DeleteProduct;
+import rs.ac.bg.fon.ps.so.GenerateInvoiceNumber;
+import rs.ac.bg.fon.ps.so.GetAllCategories;
+import rs.ac.bg.fon.ps.so.GetAllInvoices;
+import rs.ac.bg.fon.ps.so.GetAllProducts;
+import rs.ac.bg.fon.ps.so.GetAllSizes;
+import rs.ac.bg.fon.ps.so.LogIn;
+import rs.ac.bg.fon.ps.so.UpdateInvoice;
+import rs.ac.bg.fon.ps.so.UpdateProduct;
 import rs.ac.bg.fon.ps.thread.ClientThread;
 import rs.ac.bg.fon.ps.transfer.ResponseObject;
 
@@ -39,24 +49,10 @@ public class Controller {
     private static Controller instance;
     private List<ClientThread> clientThreads;
     private List<User> onlineUsers;
-    
-    private final Repository storageUser;
-    private final Repository storageCategory;
-    private final Repository storageSize;
-    private final Repository storageProduct;
-    private final Repository storageInvoice;
-    
-    
-    
+
     private Controller() {
         clientThreads = new LinkedList<>();
         onlineUsers = new LinkedList<>();
-        
-        storageUser = new RepositoryDbUser();
-        storageCategory = new RepositoryDbCategory();
-        storageSize = new RepositoryDbSize();
-        storageProduct = new RepositoryDbProduct();
-        storageInvoice = new RepositoryDbInvoice();
     }
     
     public static Controller getInstance() {
@@ -89,6 +85,7 @@ public class Controller {
                     , "Error", 
                     JOptionPane.ERROR_MESSAGE);
         }
+        onlineUsers.remove(client.getLoggedUser());
         clientThreads.remove(client);
     }
     
@@ -116,130 +113,55 @@ public class Controller {
         if (onlineUsers.contains(new User(username, password))) {
             throw new Exception("That user is already connected");
         }
-        ((DbRepository)storageUser).connect();
-        List<User> users = null;
-        try {
-            users = storageUser.getAll();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            ((DbRepository)storageUser).disconnect();
-        }
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    onlineUsers.add(user);
-                    return user;
-                }
-                throw new IncorrectPasswordException("Incorrect password.");
-            }
-        }
-        throw new UnknownUserException("Unknown user.");
+        AbstractSystemOperation so = new LogIn(username, password);
+        so.executeOperation();
+        User user = ((LogIn) so).getUser();
+        onlineUsers.add(user);
+        return user;
     }
     
     public List<Category> getAllCategories() throws Exception {
-        ((DbRepository)storageCategory).connect();
-        List<Category> categories = null;
-        try {
-            categories = storageCategory.getAll();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            ((DbRepository)storageCategory).disconnect();
-        }
-        return categories;
+        AbstractSystemOperation so = new GetAllCategories();
+        so.executeOperation();
+        return ((GetAllCategories) so).getCategories();
     }
     
     public List<Size> getAllSizes() throws Exception {
-        ((DbRepository)storageSize).connect();
-        List<Size> sizes = null;
-        try {
-            sizes = storageSize.getAll();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            ((DbRepository)storageSize).disconnect();
-        }
-        return sizes;
+        AbstractSystemOperation so = new GetAllSizes();
+        so.executeOperation();
+        return ((GetAllSizes) so).getSizes();
     }
     
     public void addProduct(Product product) throws Exception {
-        ((DbRepository)storageProduct).connect();
-        try {
-            storageProduct.add(product);
-            ((DbRepository)storageProduct).commit();
-        } catch (Exception e) {
-            ((DbRepository)storageProduct).rollback();
-            throw e;
-        } finally {
-            ((DbRepository)storageProduct).disconnect();
-        }
+        AbstractSystemOperation so = new AddProduct(product);
+        so.executeOperation();
     }
     
     public List<Product> getAllProducts() throws Exception {
-        ((DbRepository)storageProduct).connect();
-        List<Product> products = null;
-        try {
-            products = storageProduct.getAll();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            ((DbRepository)storageProduct).disconnect();
-        }
-        return products;
+        AbstractSystemOperation so = new GetAllProducts();
+        so.executeOperation();
+        return ((GetAllProducts) so).getProducts();
     }
 
     public void updateProduct(Product product) throws Exception {
-        ((DbRepository)storageProduct).connect();
-        try {
-            storageProduct.update(product);
-            ((DbRepository)storageProduct).commit();
-        } catch (Exception e) {
-            ((DbRepository)storageProduct).rollback();
-            throw e;
-        } finally {
-            ((DbRepository)storageProduct).disconnect();
-        }
+        AbstractSystemOperation so = new UpdateProduct(product);
+        so.executeOperation();
     }
 
     public void deleteProduct(Product product) throws Exception {
-        ((DbRepository)storageProduct).connect();
-        try {
-            storageProduct.delete(product);
-            ((DbRepository)storageProduct).commit();
-        } catch (Exception e) {
-            ((DbRepository)storageProduct).rollback();
-            throw e;
-        } finally {
-            ((DbRepository)storageProduct).disconnect();
-        }
+        AbstractSystemOperation so = new DeleteProduct(product);
+        so.executeOperation();
     }
 
     public void saveInvoice(Invoice invoice) throws Exception {
-        ((DbRepository)storageInvoice).connect();
-        try {
-            storageInvoice.add(invoice);
-            ((DbRepository)storageInvoice).commit();
-        } catch (Exception e) {
-            ((DbRepository)storageInvoice).rollback();
-            throw e;
-        } finally {
-            ((DbRepository)storageInvoice).disconnect();
-        }
+        AbstractSystemOperation so = new AddInvoice(invoice);
+        so.executeOperation();
     }
     
     public List<Invoice> getAllInvoices() throws Exception {
-        ((DbRepository)storageInvoice).connect();
-        List<Invoice> invoices = new ArrayList<>();
-        try {
-            invoices = storageInvoice.getAll();
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            ((DbRepository)storageInvoice).disconnect();
-        }
-        
-        return invoices;
+        AbstractSystemOperation so = new GetAllInvoices();
+        so.executeOperation();
+        return ((GetAllInvoices) so).getInvoices();
     }
 
     public void informAllUsers(ResponseObject response) {
@@ -250,5 +172,16 @@ public class Controller {
 
     public void logOut(ClientThread client) {
         onlineUsers.remove(client.getLoggedUser());
+    }
+
+    public String generateInvoiceNumber() throws Exception{
+        AbstractSystemOperation so = new GenerateInvoiceNumber();
+        so.executeOperation();
+        return ((GenerateInvoiceNumber) so).getNumber();
+    }
+
+    public void updateInvoice(Invoice invoice) throws Exception{
+        AbstractSystemOperation so = new UpdateInvoice(invoice);
+        so.executeOperation();
     }
 }

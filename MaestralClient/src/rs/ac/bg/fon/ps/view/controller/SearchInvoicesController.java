@@ -62,16 +62,16 @@ public class SearchInvoicesController {
     public void openForm() {
         frmSearchInvoices.setLocationRelativeTo(parent);
         frmSearchInvoices.setResizable(false);
+        prepareView();
         try {
-            prepareView();
             Thread.sleep(1000);
-            frmSearchInvoices.setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(SearchInvoicesController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        frmSearchInvoices.setVisible(true);
     }
 
-    private void prepareView() throws Exception {
+    private void prepareView() {
         fillCmbFiter();
         gatherDataForTblInvoices();
     }
@@ -95,6 +95,15 @@ public class SearchInvoicesController {
     public void viewInitialisationFailed() {
         JOptionPane.showMessageDialog(frmSearchInvoices, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
         frmSearchInvoices.dispose();
+    }
+
+    public FrmSearchInvoices getFrmSearchInvoices() {
+        return frmSearchInvoices;
+    }
+
+    public void refreshInvoicesView(List<Invoice> invoices) {
+        InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
+        model.setInvoices(invoices);
     }
 
 }

@@ -24,7 +24,7 @@ public class RepositoryDbUser implements DbRepository<User>{
     }
     
     @Override
-    public List<User> getAll() throws Exception {
+    public List<User> getAll(User param) throws Exception {
         List<User> users = new ArrayList<>();
         
         String query = "SELECT id, first_name, last_name, username, password FROM user";
@@ -59,6 +59,16 @@ public class RepositoryDbUser implements DbRepository<User>{
 
     @Override
     public void delete(User param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<User> getAll(User param, List<String> columns, List<Object> values) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User getByPrimaryKey(User param, Long primaryKey) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

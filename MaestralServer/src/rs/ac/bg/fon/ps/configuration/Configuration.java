@@ -23,7 +23,7 @@ public class Configuration {
     private Configuration() {
         try {
             properties = new Properties();
-            properties.load(new FileInputStream("src/rs/ac/bg/fon/ps/resources/configuration.properties"));
+            properties.load(new FileInputStream("config/configuration.properties"));
         } catch (Exception ex) {
             Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,7 +69,7 @@ public class Configuration {
 
 
     private void writeToFile() throws Exception {
-        FileOutputStream outputStream = new FileOutputStream("src/rs/ac/bg/fon/ps/resources/configuration.properties");
+        FileOutputStream outputStream = new FileOutputStream("config/configuration.properties");
         properties.store(outputStream, "");
         outputStream.close();
     }

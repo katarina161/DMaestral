@@ -6,12 +6,15 @@
 package rs.ac.bg.fon.ps.domain;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Katarina
  */
-public class Size implements Serializable{
+public class Size implements DomainObject, Serializable{
     
     private Long id;
     private int sizeNumber;
@@ -61,6 +64,69 @@ public class Size implements Serializable{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getTableName() {
+        return "size";
+    }
+
+    @Override
+    public String getParameterNames() {
+        return "id, number";
+    }
+
+    @Override
+    public String getParameterValues() {
+        return String.format("%s, %s", id, sizeNumber);
+    }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return "id";
+    }
+
+    @Override
+    public Long getPrimaryKeyValue() {
+        return id;
+    }
+
+    @Override
+    public void setPrimaryKey(Long key) {
+        this.id = key;
+    }
+
+    @Override
+    public String getJoinCondition() {
+        return null;
+    }
+
+    @Override
+    public String getAllias() {
+        return "s";
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return "number=" +sizeNumber;
+    }
+
+    @Override
+    public List<DomainObject> convertRSList(ResultSet rs) {
+        List<DomainObject> list = new ArrayList<>();
+        try {
+            while (rs.next()) {                
+                Size s = new Size();
+                s.setId(rs.getLong("s.id"));
+                s.setSizeNumber(rs.getInt("s.number"));
+                
+                list.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR ResultSet " + getTableName());
+        }
+        
+        return list;
     }
     
     

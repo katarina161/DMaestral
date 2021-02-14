@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Category;
 import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
@@ -63,7 +62,7 @@ public class Communication extends Thread {
                         if (response.getException() == null) {
                             MainCordinator.getInstance().getProductController().saveProductSuccess();
                         } else {
-                            MainCordinator.getInstance().getProductController().saveProductFailed();
+                            MainCordinator.getInstance().getProductController().saveProductFailed(response.getMessage());
                             System.err.println(response.getMessage());
                         }
                         break;
@@ -79,15 +78,17 @@ public class Communication extends Thread {
                         if (response.getException() == null) {
                             MainCordinator.getInstance().getProductController().deleteProductSuccess();
                         } else {
-                            MainCordinator.getInstance().getProductController().deleteProductFailed();
+                            MainCordinator.getInstance().getProductController().deleteProductFailed(response.getMessage());
                             System.err.println(response.getMessage());
                         }
                         break;
                     case REFRESH_PRODUCTS:
-                        if (response.getException() == null) {
-                            MainCordinator.getInstance().refreshProductsView((List<Product>) response.getResult());
-                        } else {
-                            System.err.println(response.getMessage());
+                        if (MainCordinator.getInstance().isSearchProductsVisible()) {
+                            if (response.getException() == null) {
+                                MainCordinator.getInstance().refreshProductsView((List<Product>) response.getResult());
+                            } else {
+                                System.err.println(response.getMessage());
+                            }
                         }
                         break;
                     case GET_ALL_CATEGORIES:
@@ -132,8 +133,32 @@ public class Communication extends Thread {
                         if (response.getException() == null) {
                             MainCordinator.getInstance().getInvoiceController().saveInvoiceSuccess((Invoice) response.getResult());
                         } else {
-                            MainCordinator.getInstance().getInvoiceController().saveInvoiceFailed();
+                            MainCordinator.getInstance().getInvoiceController().saveInvoiceFailed(response.getMessage());
                             System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GENERATE_INVOICE_NUMBER:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().setGeneratedNumber(String.valueOf(response.getResult()));
+                        } else {
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case UPDATE_INVOICE:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().updateSuccess();
+                        } else {
+                            MainCordinator.getInstance().getInvoiceController().updateFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case REFRESH_INVOICES:
+                        if (MainCordinator.getInstance().isSearchInvoicesVisible()) {
+                            if (response.getException() == null) {
+                                MainCordinator.getInstance().refreshInvoicesView((List<Invoice>) response.getResult());
+                            } else {
+                                System.err.println(response.getMessage());
+                            }
                         }
                         break;
                 }

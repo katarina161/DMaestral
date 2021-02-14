@@ -8,11 +8,8 @@ package rs.ac.bg.fon.ps.view.cordinator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import rs.ac.bg.fon.ps.domain.Category;
+import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
-import rs.ac.bg.fon.ps.domain.Size;
-import rs.ac.bg.fon.ps.domain.User;
-import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.controller.InvoiceController;
 import rs.ac.bg.fon.ps.view.controller.LogInController;
 import rs.ac.bg.fon.ps.view.controller.MainController;
@@ -93,7 +90,7 @@ public class MainCordinator {
     }
 
     public void refreshProductsView(List<Product> products) {
-        if (searchProductsController.getFrmSearchProducts().isVisible()) {
+        if (searchProductsController != null && searchProductsController.getFrmSearchProducts().isVisible()) {
             searchProductsController.refreshProductsView(products);
         }
     }
@@ -136,5 +133,18 @@ public class MainCordinator {
     public void removeParams() {
         params = new HashMap<>();
     }
+    
+    public boolean isSearchInvoicesVisible() {
+        return searchInvoicesController != null && searchInvoicesController.getFrmSearchInvoices().isVisible();
+    }
+    
+    public boolean isSearchProductsVisible() {
+        return searchProductsController != null && searchProductsController.getFrmSearchProducts().isVisible();
+    }
 
+    public void refreshInvoicesView(List<Invoice> invoices) {
+        if (searchInvoicesController != null && searchInvoicesController.getFrmSearchInvoices().isVisible()) {
+            searchInvoicesController.refreshInvoicesView(invoices);
+        }
+    }
 }

@@ -41,7 +41,6 @@ public class FrmMain extends javax.swing.JFrame {
         menuEmployer = new javax.swing.JMenu();
         miEmployerNew = new javax.swing.JMenuItem();
         miEmployerSearch = new javax.swing.JMenuItem();
-        menuAbout = new javax.swing.JMenu();
         menuUser = new javax.swing.JMenu();
         miLogOut = new javax.swing.JMenuItem();
 
@@ -103,11 +102,6 @@ public class FrmMain extends javax.swing.JFrame {
 
         menuMain.add(menuEmployer);
 
-        menuAbout.setForeground(new java.awt.Color(2, 26, 126));
-        menuAbout.setText("About");
-        menuAbout.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
-        menuMain.add(menuAbout);
-
         menuUser.setForeground(new java.awt.Color(2, 26, 126));
         menuUser.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
 
@@ -143,7 +137,6 @@ public class FrmMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblImage;
-    private javax.swing.JMenu menuAbout;
     private javax.swing.JMenu menuEmployer;
     private javax.swing.JMenu menuInvoice;
     private javax.swing.JMenuBar menuMain;

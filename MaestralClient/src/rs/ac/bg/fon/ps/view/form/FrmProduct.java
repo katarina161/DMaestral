@@ -162,6 +162,7 @@ public class FrmProduct extends javax.swing.JDialog {
 
         lblPriceWithoutWatError.setForeground(new java.awt.Color(229, 10, 10));
 
+        txtVATPercentage.setEditable(false);
         txtVATPercentage.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtVATPercentage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtVATPercentage.setText("20");

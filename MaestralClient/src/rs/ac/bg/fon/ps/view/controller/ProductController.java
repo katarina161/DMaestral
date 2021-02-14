@@ -166,6 +166,7 @@ public class ProductController {
     private void prepareView(FormMode formMode) {
         fillCmbCategory();
         fillCmbSize();
+        fillDefaultValues();
         setupComponents(formMode);
     }
 
@@ -175,6 +176,10 @@ public class ProductController {
 
     private void fillCmbSize() {
         Controller.getInstance().getAllSizes();
+    }
+
+    private void fillDefaultValues() {
+        frmProduct.getTxtVATPercentage().setText(String.valueOf(Constants.VAT_PERCENTAGE));
     }
 
     private void setupComponents(FormMode formMode) {
@@ -203,7 +208,7 @@ public class ProductController {
 
     private void fillProductForm() {
         try {
-            Thread.sleep(1300);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -307,13 +312,13 @@ public class ProductController {
         try {
             validatePrice();
             BigDecimal priceWithout = new BigDecimal(frmProduct.getTxtPriceWithoutVAT().getText().trim());
-            int VATpercentage = Integer.parseInt(frmProduct.getTxtVATPercentage().getText().trim());
+            int VATpercentage = Constants.VAT_PERCENTAGE;
             BigDecimal priceWith = priceWithout.multiply(new BigDecimal(1 + VATpercentage / 100.00));
             frmProduct.getTxtPriceWithVAT().setText(String.valueOf(priceWith.setScale(2, RoundingMode.HALF_UP).doubleValue()));
             return priceWith;
         } catch (NumberFormatException | NegativePriceException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(frmProduct, "Price and VAT percentage must be a positive number!", "Price Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number!", "Price Error", JOptionPane.ERROR_MESSAGE);
             return null;
         } catch (Exception ex) {
             Logger.getLogger(FrmProduct.class.getName()).log(Level.SEVERE, null, ex);
@@ -328,16 +333,6 @@ public class ProductController {
         }
 
         return selectedSizes;
-    }
-
-    public void saveProductSuccess() {
-        resetForm();
-        JOptionPane.showMessageDialog(frmProduct, "Product successfully saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        Controller.getInstance().refreshProductsView();
-    }
-
-    public void saveProductFailed() {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Save product failed.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void fillCategories(List<Category> categories) {
@@ -360,6 +355,16 @@ public class ProductController {
         }
     }
 
+    public void saveProductSuccess() {
+        resetForm();
+        JOptionPane.showMessageDialog(frmProduct, "Product successfully saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        Controller.getInstance().refreshProductsView();
+    }
+
+    public void saveProductFailed(String message) {
+        JOptionPane.showMessageDialog(frmProduct, "Error occured. Save product failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     public void updateProductSuccess() {
         Controller.getInstance().refreshProductsView();
         JOptionPane.showMessageDialog(frmProduct, "Product successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -375,7 +380,7 @@ public class ProductController {
         frmProduct.dispose();
     }
 
-    public void deleteProductFailed() {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Delete product failed.", "Error", JOptionPane.ERROR_MESSAGE);
+    public void deleteProductFailed(String message) {
+        JOptionPane.showMessageDialog(frmProduct, "Error occured. Delete product failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -19,14 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableColumn;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;
@@ -112,13 +109,14 @@ public class InvoiceController {
             public void actionPerformed(ActionEvent e) {
                 closeForm();
             }
+        });
 
-            private void closeForm() {
-                int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                        "Are you sure you want to close this window, your inputs won't be saved?",
-                        "Exit",
-                        JOptionPane.YES_NO_OPTION);
-                if (answer == 0) {
+        frmInvoice.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (frmInvoice.getBtnSave().isVisible() || frmInvoice.getBtnEdit().isVisible()) {
+                    closeForm();
+                } else {
                     frmInvoice.dispose();
                 }
             }
@@ -145,6 +143,34 @@ public class InvoiceController {
                 }
             }
         });
+
+        frmInvoice.btnEditAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateInvoice();
+            }
+
+            private void updateInvoice() {
+                try {
+                    int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                            "Are you sure you want to make this changes",
+                            "Change invoice",
+                            JOptionPane.YES_NO_OPTION);
+                    if (answer == 0) {
+                        validateForm();
+
+                        Invoice invoice = makeInvoiceFromForm();
+                        Controller.getInstance().updateInvoice(invoice);
+                    }
+                } catch (InvalidFormException ex) {
+                    Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmInvoice, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (ParseException ex) {
+                    Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmInvoice, "Date must be in 'dd.MM.yyyy' format", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     public void openForm(FormMode formMode) {
@@ -154,12 +180,23 @@ public class InvoiceController {
         frmInvoice.setVisible(true);
     }
 
+    private void closeForm() {
+        int answer = JOptionPane.showConfirmDialog(frmInvoice,
+                "Are you sure you want to close this window, your changes won't be saved?",
+                "Exit",
+                JOptionPane.YES_NO_OPTION);
+        if (answer == 0) {
+            frmInvoice.dispose();
+            Controller.getInstance().refreshInvoicesView();
+        }
+    }
+
     private void prepareView(FormMode formMode) {
         fillCmbProducts();
         fillTblItems();
         frmInvoice.getCmbSizes().removeAllItems();
         try {
-            Thread.sleep(1300);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -198,20 +235,6 @@ public class InvoiceController {
                 frmInvoice.getLblTotal().setText(String.valueOf(total));
             }
         });
-
-        frmInvoice.tblItemsAddSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int row = frmInvoice.getTblItems().getSelectedRow();
-                if (row >= 0) {
-                    InvoiceItemTableModel model = (InvoiceItemTableModel) frmInvoice.getTblItems().getModel();
-                    Product product = (Product) model.getValueAt(row, 1);
-                    JComboBox sizes = new JComboBox(product.getSizes().toArray());
-                    TableColumn colSize = frmInvoice.getTblItems().getColumnModel().getColumn(2);
-                    colSize.setCellEditor(new DefaultCellEditor(sizes));
-                }
-            }
-        });
     }
 
     private void setupComponents(FormMode formMode) {
@@ -248,6 +271,8 @@ public class InvoiceController {
     private void fillDefaultValues() {
         frmInvoice.getTxtDate().setText(DATE_FORMAT.format(new Date()));
         frmInvoice.getLblUser().setText(String.valueOf(MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER)));
+        Controller.getInstance().generateInvoiceNumber();
+        frmInvoice.getTxtPartner().grabFocus();
     }
 
     private void validateItemForm() throws InvalidFormException {
@@ -423,7 +448,25 @@ public class InvoiceController {
         setupComponents(FormMode.FORM_DETAIL);
     }
 
-    public void saveInvoiceFailed() {
-        JOptionPane.showMessageDialog(frmInvoice, "Save invoice failed!", "Error", JOptionPane.ERROR_MESSAGE);
+    public void saveInvoiceFailed(String message) {
+        JOptionPane.showMessageDialog(frmInvoice, "Save invoice failed!\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    public FrmInvoice getFrmInvoice() {
+        return frmInvoice;
+    }
+
+    public void setGeneratedNumber(String generatedNUmber) {
+        frmInvoice.getTxtNumber().setText(generatedNUmber);
+    }
+
+    public void updateSuccess() {
+        Controller.getInstance().refreshInvoicesView();
+        JOptionPane.showMessageDialog(frmInvoice, "Invoice successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void updateFailed(String message) {
+        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Update invoice failed.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
 }

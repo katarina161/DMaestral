@@ -73,5 +73,9 @@ public class InvoiceTableModel extends AbstractTableModel{
     public Invoice getInvoice(int row) {
         return invoices.get(row);
     }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
     
 }

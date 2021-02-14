@@ -26,7 +26,7 @@ public class RepositoryDbCategory implements DbRepository<Category> {
     }
 
     @Override
-    public List<Category> getAll() throws Exception {
+    public List<Category> getAll(Category param) throws Exception {
         List<Category> categories = new ArrayList<>();
         
         String query = "SELECT id, name FROM category";
@@ -53,6 +53,16 @@ public class RepositoryDbCategory implements DbRepository<Category> {
 
     @Override
     public void delete(Category param) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Category> getAll(Category param, List<String> columns, List<Object> values) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Category getByPrimaryKey(Category param, Long primaryKey) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

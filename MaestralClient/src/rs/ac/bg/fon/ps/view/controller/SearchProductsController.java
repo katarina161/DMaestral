@@ -71,7 +71,7 @@ public class SearchProductsController {
         frmSearchProducts.setResizable(false);
         prepareView();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         } catch (InterruptedException ex) {
             Logger.getLogger(SearchProductsController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,18 +89,11 @@ public class SearchProductsController {
     public void fillTableProducts(List<Product> products) {
         ProductTableModel model = new ProductTableModel(products);
         frmSearchProducts.getTblProducts().setModel(model);
-
-//        List<Category> categories = Controller.getInstance().getAllCategories();
-//        JComboBox cbCategories = new JComboBox(categories.toArray());
-//
-//        TableColumn tc = frmSearchProducts.getTblProducts().getColumnModel().getColumn(2);
-//        tc.setCellEditor(new DefaultCellEditor(cbCategories));
     }
 
     public void refreshProductsView(List<Product> products) {
         ProductTableModel model = (ProductTableModel) frmSearchProducts.getTblProducts().getModel();
         model.setProducts(products);
-//        gatherDataForTblProducts();
     }
 
     public FrmSearchProducts getFrmSearchProducts() {

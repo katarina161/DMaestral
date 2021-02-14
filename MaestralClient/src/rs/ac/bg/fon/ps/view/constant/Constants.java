@@ -11,6 +11,7 @@ package rs.ac.bg.fon.ps.view.constant;
  */
 public class Constants {
     
+    public static final int VAT_PERCENTAGE = 20;
     public static final String PARAM_CURRENT_USER = "CURRENT_USER";
     public static final String PARAM_PRODUCT = "PRODUCT";
     public static final String PARAM_INVOICE = "INVOICE";
