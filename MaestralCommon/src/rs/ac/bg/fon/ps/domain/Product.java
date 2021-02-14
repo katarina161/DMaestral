@@ -164,7 +164,8 @@ public class Product implements DomainObject, Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("name='").append(name).append("'")
                 .append(", description='").append(description).append("'")
-                .append(", price=").append(priceWithVAT)
+                .append(", price=").append(priceWithoutVAT)
+                .append(", price_with_vat=").append(priceWithVAT)
                 .append(", category_id=").append(category.getId());
         return sb.toString();
     }

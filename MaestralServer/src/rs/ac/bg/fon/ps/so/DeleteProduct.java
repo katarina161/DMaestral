@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.so;
 
 import java.util.Arrays;
+import java.util.List;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.ProductSize;
@@ -32,8 +33,10 @@ public class DeleteProduct extends AbstractSystemOperation{
 
     @Override
     protected void executeSpecificOperation() throws Exception {
-        for (Size s: product.getSizes()) {
-            repository.delete(new ProductSize(product, s));
+        List<ProductSize> pss 
+                = (List<ProductSize>) repository.getAll(new ProductSize(), Arrays.asList("product_article"), Arrays.asList(product.getArticle()));
+        for (ProductSize ps: pss) {
+            repository.delete(ps);
         }
         repository.delete(product);
     }
