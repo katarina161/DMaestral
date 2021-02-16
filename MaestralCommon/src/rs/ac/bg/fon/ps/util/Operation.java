@@ -12,8 +12,12 @@ import java.io.Serializable;
  * @author Katarina
  */
 public enum Operation implements Serializable{
+    GET_ALL_IMAGES,
     LOG_IN, 
     LOG_OUT,
+    GET_ALL_USERS,
+    GET_FILTERED_USERS,
+    REFRESH_USERS,
     SAVE_PRODUCT, 
     UPDATE_PRODUCT, 
     DELETE_PRODUCT,

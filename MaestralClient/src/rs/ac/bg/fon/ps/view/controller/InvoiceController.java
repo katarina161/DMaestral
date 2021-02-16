@@ -187,10 +187,14 @@ public class InvoiceController {
                             JOptionPane.YES_NO_OPTION);
                     if (answer == 0) {
                         validateForm();
-
-                        Controller.getInstance().processInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
+                        
+                        Invoice invoice = makeInvoiceFromForm();
+                        invoice.setDate(new Date());
+                        Controller.getInstance().processInvoice(invoice);
                     }
                 } catch (InvalidFormException ex) {
+                    Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -302,6 +306,7 @@ public class InvoiceController {
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
+                frmInvoice.setTitle("Create Invoice");
                 frmInvoice.getTxtNumber().setEnabled(true);
                 frmInvoice.getTxtDate().setEnabled(true);
                 frmInvoice.getTxtPartner().setEnabled(true);
@@ -317,13 +322,19 @@ public class InvoiceController {
                 fillDefaultValues();
                 break;
             case FORM_DETAIL:
+                frmInvoice.setTitle("Invoice Details");
                 Invoice invoice = (Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE);
-                if (invoice.isProcessed() && !invoice.isCanceld()) {
-                    openProcessedInvoice();
-                } else if (invoice.isCanceld()) {
+                boolean admin = ((User) MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER)).isAdmin();
+                if (!admin) {
                     openCanceledInvoice();
                 } else {
-                    openSavedInvoice();
+                    if (invoice.isProcessed() && !invoice.isCanceld()) {
+                        openProcessedInvoice();
+                    } else if (invoice.isCanceld()) {
+                        openCanceledInvoice();
+                    } else {
+                        openSavedInvoice();
+                    }
                 }
                 fillForm(invoice);
                 break;

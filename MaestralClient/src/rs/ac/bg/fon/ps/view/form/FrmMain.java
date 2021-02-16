@@ -8,6 +8,7 @@ package rs.ac.bg.fon.ps.view.form;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -97,10 +98,12 @@ public class FrmMain extends javax.swing.JFrame {
         menuEmployer.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
 
         miEmployerNew.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        miEmployerNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/register.png"))); // NOI18N
         miEmployerNew.setText("Register");
         menuEmployer.add(miEmployerNew);
 
         miEmployerSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        miEmployerSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/search.png"))); // NOI18N
         miEmployerSearch.setText("Search");
         menuEmployer.add(miEmployerSearch);
 
@@ -181,6 +184,26 @@ public class FrmMain extends javax.swing.JFrame {
 
     public JLabel getLblImage() {
         return lblImage;
+    }
+
+    public JMenu getMenuEmployer() {
+        return menuEmployer;
+    }
+
+    public JMenuItem getMiInvoiceNew() {
+        return miInvoiceNew;
+    }
+
+    public JMenuItem getMiProductNew() {
+        return miProductNew;
+    }
+
+    public void jmiEmployerNewAddActionListener(ActionListener actionListener) {
+        miEmployerNew.addActionListener(actionListener);
+    }
+
+    public void jmiEmployerSearchAddActionListener(ActionListener actionListener) {
+        miEmployerSearch.addActionListener(actionListener);
     }
     
 }

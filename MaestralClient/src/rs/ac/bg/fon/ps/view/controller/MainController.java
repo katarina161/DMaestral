@@ -15,6 +15,7 @@ import rs.ac.bg.fon.ps.domain.User;
 import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmMain;
+import rs.ac.bg.fon.ps.view.util.FormMode;
 
 /**
  *
@@ -23,13 +24,15 @@ import rs.ac.bg.fon.ps.view.form.FrmMain;
 public class MainController {
 
     private final FrmMain frmMain;
+    private FormMode mode;
 
     public MainController(FrmMain frmMain) {
         this.frmMain = frmMain;
         addActionListener();
     }
 
-    public void openForm() {
+    public void openForm(FormMode mode) {
+        this.mode = mode;
         User user = (User) MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER);
         frmMain.getMenuUser().setText(user.getUsername());
         prepareView();
@@ -55,7 +58,7 @@ public class MainController {
             }
 
             private void jmiProductSearchActionPerformed(ActionEvent e) {
-                MainCordinator.getInstance().openViewAllProductsForm();
+                MainCordinator.getInstance().openViewAllProductsForm(mode);
             }
         });
 
@@ -83,6 +86,20 @@ public class MainController {
                 MainCordinator.getInstance().openViewAllInvoicesForm();
             }
         });
+        
+        frmMain.jmiEmployerNewAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainCordinator.getInstance().openAddNewUserForm();
+            }
+        });
+        
+        frmMain.jmiEmployerSearchAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainCordinator.getInstance().openViewAllUsersForm();
+            }
+        });
     }
 
     public FrmMain getFrmMain() {
@@ -93,8 +110,24 @@ public class MainController {
         frmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frmMain.setLocationRelativeTo(null);
         frmMain.getContentPane().setBackground(Color.WHITE);
+        setupComponents();
     }
 
+    private void setupComponents() {
+        switch (mode) {
+            case FORM_ADMIN:
+                frmMain.getMiProductNew().setVisible(true);
+                frmMain.getMiInvoiceNew().setVisible(true);
+                frmMain.getMenuEmployer().setVisible(true);
+                break;
+            case FORM_USER:
+                frmMain.getMiProductNew().setVisible(false);
+                frmMain.getMiInvoiceNew().setVisible(false);
+                frmMain.getMenuEmployer().setVisible(false);
+                break;
+        }
+    }
+    
     public void logOutSuccess() {
         MainCordinator.getInstance().removeParams();
         frmMain.dispose();

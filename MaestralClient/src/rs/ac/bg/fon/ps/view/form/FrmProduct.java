@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -514,7 +515,10 @@ public class FrmProduct extends javax.swing.JDialog {
     public JLabel getLblSizeError() {
         return lblSizeError;
     }
-    
+
+    public JPanel getPanelProduct() {
+        return panelProduct;
+    }
 
     public void btnSaveAddActionListener(ActionListener actionListener) {
         btnSave.addActionListener(actionListener);

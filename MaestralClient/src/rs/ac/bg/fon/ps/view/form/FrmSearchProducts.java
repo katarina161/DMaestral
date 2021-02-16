@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import rs.ac.bg.fon.ps.view.component.table.ProductTableModel;
 
@@ -114,6 +115,10 @@ public class FrmSearchProducts extends javax.swing.JDialog {
 
     public void btnAddAddActionListener(ActionListener actionListener) {
         btnAdd.addActionListener(actionListener);
+    }
+
+    public JButton getBtnAdd() {
+        return btnAdd;
     }
     
 }

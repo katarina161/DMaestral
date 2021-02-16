@@ -78,7 +78,7 @@ public class RepositoryDbInvoice implements DbRepository<Invoice> {
             u.setPassword(rs.getString("u.password"));
             u.setFirstName(rs.getString("u.first_name"));
             u.setLastName(rs.getString("u.last_name"));
-            u.setAdministrator(rs.getBoolean("u.administrator"));
+            u.setAdmin(rs.getBoolean("u.administrator"));
             
             Invoice invoice = new Invoice();
             invoice.setId(rs.getLong("i.id"));

@@ -13,6 +13,7 @@ import rs.ac.bg.fon.ps.exception.RequiredFieldsEmptyException;
 import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmLogIn;
+import rs.ac.bg.fon.ps.view.util.FormMode;
 
 /**
  *
@@ -94,8 +95,9 @@ public class LogInController {
         JOptionPane.showMessageDialog(frmLogIn, "Welcome " + user.getFirstName(),
                 "Success", JOptionPane.INFORMATION_MESSAGE);
         frmLogIn.dispose();
-
-        MainCordinator.getInstance().openMainForm();
+        
+        FormMode mode = user.isAdmin()? FormMode.FORM_ADMIN : FormMode.FORM_USER;
+        MainCordinator.getInstance().openMainForm(mode);
     }
 
     public void logInFailed(String message) {

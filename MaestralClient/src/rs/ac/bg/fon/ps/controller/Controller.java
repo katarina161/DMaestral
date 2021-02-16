@@ -164,8 +164,33 @@ public class Controller {
         RequestObject request = new RequestObject();
         request.setOperation(Operation.GET_FILTERED_INVOICES);
         request.setColumns(columns);
+        request.setValues(values);
+        communication.sendRequest(request);
+    }
+
+    public void getImages() {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GET_ALL_IMAGES);
+        communication.sendRequest(request);
+    }
+
+    public void getAllUsers() {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GET_ALL_USERS);
+        communication.sendRequest(request);
+    }
+
+    public void getFilteredUsers(List<String> columns, List<Object> values) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GET_FILTERED_USERS);
         request.setColumns(columns);
         request.setValues(values);
+        communication.sendRequest(request);
+    }
+
+    public void refreshUsersView() {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.REFRESH_USERS);
         communication.sendRequest(request);
     }
 

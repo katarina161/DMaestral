@@ -15,6 +15,7 @@ import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
 import rs.ac.bg.fon.ps.domain.User;
+import rs.ac.bg.fon.ps.domain.UserImage;
 import rs.ac.bg.fon.ps.transfer.RequestObject;
 import rs.ac.bg.fon.ps.transfer.ResponseObject;
 import rs.ac.bg.fon.ps.util.Receiver;
@@ -122,10 +123,29 @@ public class ClientThread extends Thread {
                             Controller.getInstance().cancelInvoice(cancelInvoice);
                             break;
                         case GET_FILTERED_INVOICES:
-                            List<String> columns = request.getColumns();
-                            List<Object> values = request.getValues();
-                            List<Invoice> filteredInvoices = Controller.getInstance().getFilteredInvoices(columns, values);
+                            List<String> columnsInvoice = request.getColumns();
+                            List<Object> valuesInvoice = request.getValues();
+                            List<Invoice> filteredInvoices = Controller.getInstance().getFilteredInvoices(columnsInvoice, valuesInvoice);
                             response.setResult(filteredInvoices);
+                            break;
+                        case GET_ALL_IMAGES:
+                            List<UserImage> images = Controller.getInstance().getAllImages();
+                            response.setResult(images);
+                            break;
+                        case GET_ALL_USERS:
+                            List<User> users = Controller.getInstance().getAllUsers();
+                            response.setResult(users);
+                            break;
+                        case GET_FILTERED_USERS:
+                            List<String> columnsUser = request.getColumns();
+                            List<Object> valuesUser = request.getValues();
+                            List<User> filteredUsers = Controller.getInstance().getFilteredUsers(columnsUser, valuesUser);
+                            response.setResult(filteredUsers);
+                            break;
+                        case REFRESH_USERS:
+                            List<User> refreshUsers = Controller.getInstance().getAllUsers();
+                            response.setResult(refreshUsers);
+                            Controller.getInstance().informAllUsers(response);
                             break;
                     }
                 } catch (Exception e) {

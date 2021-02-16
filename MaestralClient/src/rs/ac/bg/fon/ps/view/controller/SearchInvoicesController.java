@@ -61,7 +61,7 @@ public class SearchInvoicesController {
                 }
             }
         });
-        
+
         frmSearchInvoices.btnSearchAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,12 +71,12 @@ public class SearchInvoicesController {
             private void filterInvoices() {
                 List<String> columns = new ArrayList<>();
                 List<Object> values = new ArrayList<>();
-                
+
                 String number = frmSearchInvoices.getTxtSearchNumber().getText().trim();
                 String partner = frmSearchInvoices.getTxtSearchPartner().getText().trim();
                 Date date = frmSearchInvoices.getjDateChooser().getDate();
                 InvoiceFilter status = (InvoiceFilter) frmSearchInvoices.getCmbFilter().getSelectedItem();
-                
+
                 if (!number.isEmpty()) {
                     columns.add("number");
                     values.add(number);
@@ -85,7 +85,7 @@ public class SearchInvoicesController {
                     columns.add("partner");
                     values.add(partner);
                 }
-                if (date!= null) {
+                if (date != null) {
                     columns.add("date");
                     values.add(new java.sql.Date(date.getTime()));
                 }
@@ -105,7 +105,7 @@ public class SearchInvoicesController {
                             break;
                     }
                 }
-                
+
                 if (!columns.isEmpty()) {
                     Controller.getInstance().getFilteredInvoices(columns, values);
                 } else {
@@ -113,7 +113,7 @@ public class SearchInvoicesController {
                 }
             }
         });
-        
+
         frmSearchInvoices.btnCancelFilterAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -173,8 +173,49 @@ public class SearchInvoicesController {
     }
 
     public void refreshInvoicesView(List<Invoice> invoices) {
-        InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
-        model.setInvoices(invoices);
+        List<String> columns = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
+
+        String number = frmSearchInvoices.getTxtSearchNumber().getText().trim();
+        String partner = frmSearchInvoices.getTxtSearchPartner().getText().trim();
+        Date date = frmSearchInvoices.getjDateChooser().getDate();
+        InvoiceFilter status = (InvoiceFilter) frmSearchInvoices.getCmbFilter().getSelectedItem();
+
+        if (!number.isEmpty()) {
+            columns.add("number");
+            values.add(number);
+        }
+        if (!partner.isEmpty()) {
+            columns.add("partner");
+            values.add(partner);
+        }
+        if (date != null) {
+            columns.add("date");
+            values.add(new java.sql.Date(date.getTime()));
+        }
+        if (status != null) {
+            switch (status) {
+                case Canceled:
+                    columns.add("canceled");
+                    values.add(true);
+                    break;
+                case Processed:
+                    columns.add("processed");
+                    values.add(true);
+                    break;
+                case Unprocessed:
+                    columns.add("processed");
+                    values.add(false);
+                    break;
+            }
+        }
+
+        if (!columns.isEmpty()) {
+            Controller.getInstance().getFilteredInvoices(columns, values);
+        } else {
+            InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
+            model.setInvoices(invoices);
+        }
     }
 
     public void setFilteredInvoices(List<Invoice> invoices) {
@@ -183,7 +224,7 @@ public class SearchInvoicesController {
     }
 
     public void filterInvoicesFailed(String message) {
-        JOptionPane.showMessageDialog(frmSearchInvoices, "Error occurred while filtering.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchInvoices, "Error occurred while filtering.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

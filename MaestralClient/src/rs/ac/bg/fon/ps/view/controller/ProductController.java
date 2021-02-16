@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.controller;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -16,11 +17,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Category;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
+import rs.ac.bg.fon.ps.domain.User;
 import rs.ac.bg.fon.ps.exception.NegativePriceException;
 import rs.ac.bg.fon.ps.exception.RequiredFieldsEmptyException;
 import rs.ac.bg.fon.ps.view.constant.Constants;
@@ -193,16 +197,29 @@ public class ProductController {
                 frmProduct.getBtnDelete().setVisible(false);
                 break;
             case FORM_DETAIL:
-                frmProduct.setTitle("Update Product");
+                boolean admin = ((User) MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER)).isAdmin();
+                frmProduct.setTitle("Product Details");
                 frmProduct.getBtnSave().setVisible(false);
                 frmProduct.getBtnReset().setVisible(false);
-                frmProduct.getBtnRevert().setVisible(true);
-                frmProduct.getBtnUpdate().setVisible(true);
-                frmProduct.getBtnDelete().setVisible(true);
-                frmProduct.getTxtArticle().setEnabled(false);
-
+                setEditable(admin);
+                frmProduct.getTxtArticle().setEditable(false);
                 fillProductForm();
                 break;
+        }
+    }
+
+    private void setEditable(boolean edit) {
+        for (Component component : frmProduct.getPanelProduct().getComponents()) {
+            if (component instanceof JTextField) {
+                ((JTextField) component).setEditable(edit);
+            } else if (component instanceof JButton) {
+                ((JButton) component).setEnabled(edit);
+            }
+            frmProduct.getTxtDescription().setEditable(edit);
+            frmProduct.getCmbCategory().setEnabled(edit);
+            frmProduct.getBtnRevert().setVisible(edit);
+            frmProduct.getBtnUpdate().setVisible(edit);
+            frmProduct.getBtnDelete().setVisible(edit);
         }
     }
 
@@ -362,7 +379,7 @@ public class ProductController {
     }
 
     public void saveProductFailed(String message) {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Save product failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct, "Error occured. Save product failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void updateProductSuccess() {
@@ -381,6 +398,6 @@ public class ProductController {
     }
 
     public void deleteProductFailed(String message) {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Delete product failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct, "Error occured. Delete product failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

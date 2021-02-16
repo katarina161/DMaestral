@@ -18,13 +18,7 @@ import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
 import rs.ac.bg.fon.ps.domain.User;
-import rs.ac.bg.fon.ps.repository.Repository;
-import rs.ac.bg.fon.ps.repository.db.DbRepository;
-import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbCategory;
-import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbInvoice;
-import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbProduct;
-import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbSize;
-import rs.ac.bg.fon.ps.repository.db.impl.RepositoryDbUser;
+import rs.ac.bg.fon.ps.domain.UserImage;
 import rs.ac.bg.fon.ps.so.AbstractSystemOperation;
 import rs.ac.bg.fon.ps.so.AddInvoice;
 import rs.ac.bg.fon.ps.so.AddProduct;
@@ -33,10 +27,13 @@ import rs.ac.bg.fon.ps.so.DeleteInvoice;
 import rs.ac.bg.fon.ps.so.DeleteProduct;
 import rs.ac.bg.fon.ps.so.GenerateInvoiceNumber;
 import rs.ac.bg.fon.ps.so.GetAllCategories;
+import rs.ac.bg.fon.ps.so.GetAllImages;
 import rs.ac.bg.fon.ps.so.GetAllInvoices;
 import rs.ac.bg.fon.ps.so.GetAllProducts;
 import rs.ac.bg.fon.ps.so.GetAllSizes;
+import rs.ac.bg.fon.ps.so.GetAllUsers;
 import rs.ac.bg.fon.ps.so.GetFilteredInvoices;
+import rs.ac.bg.fon.ps.so.GetFilteredUsers;
 import rs.ac.bg.fon.ps.so.LogIn;
 import rs.ac.bg.fon.ps.so.ProcessInvoice;
 import rs.ac.bg.fon.ps.so.UpdateInvoice;
@@ -208,5 +205,23 @@ public class Controller {
         AbstractSystemOperation so = new GetFilteredInvoices(columns, values);
         so.executeOperation();
         return ((GetFilteredInvoices) so).getInvoices();
+    }
+
+    public List<UserImage> getAllImages() throws Exception {
+        AbstractSystemOperation so = new GetAllImages();
+        so.executeOperation();
+        return ((GetAllImages) so).getImages();
+    }
+
+    public List<User> getAllUsers() throws Exception {
+        AbstractSystemOperation so = new GetAllUsers();
+        so.executeOperation();
+        return ((GetAllUsers) so).getUsers();
+    }
+
+    public List<User> getFilteredUsers(List<String> columns, List<Object> values) throws Exception {
+        AbstractSystemOperation so = new GetFilteredUsers(columns, values);
+        so.executeOperation();
+        return ((GetFilteredUsers) so).getUsers();
     }
 }

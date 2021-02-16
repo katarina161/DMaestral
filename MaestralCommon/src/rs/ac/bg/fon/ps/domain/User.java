@@ -22,18 +22,19 @@ public class User implements DomainObject, Serializable {
     private String lastName;
     private String username;
     private String password;
-    private boolean administrator;
+    private boolean admin;
+    private UserImage image;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, boolean administrator) {
+    public User(Long id, String firstName, String lastName, String username, String password, boolean admin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.administrator = administrator;
+        this.admin = admin;
     }
 
     public User(String username, String password) {
@@ -81,12 +82,20 @@ public class User implements DomainObject, Serializable {
         this.password = password;
     }
 
-    public boolean isAdministrator() {
-        return administrator;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setAdministrator(boolean administrator) {
-        this.administrator = administrator;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public UserImage getImage() {
+        return image;
+    }
+
+    public void setImage(UserImage image) {
+        this.image = image;
     }
 
     @Override
@@ -131,12 +140,12 @@ public class User implements DomainObject, Serializable {
 
     @Override
     public String getParameterNames() {
-        return "id, username, password, first_name, last_name, administrator";
+        return "username, password, first_name, last_name, admin";
     }
 
     @Override
     public String getParameterValues() {
-        return String.format("%s, '%s', '%s', '%s', '%s', %s", id, username, password, firstName, lastName, administrator);
+        return String.format("'%s', '%s', '%s', '%s', %s, '%s'", username, password, firstName, lastName, admin, image.getPath());
     }
 
     @Override
@@ -156,7 +165,7 @@ public class User implements DomainObject, Serializable {
 
     @Override
     public String getJoinCondition() {
-        return null;
+        return "LEFT JOIN user_image ui ON u.image = ui.id";
     }
 
     @Override
@@ -176,12 +185,18 @@ public class User implements DomainObject, Serializable {
         List<DomainObject> list = new ArrayList<>();
         try {
             while (rs.next()) {
+                UserImage img = new UserImage();
+                img.setId(rs.getLong("ui.id"));
+                img.setPath(rs.getString("ui.path"));
+                
                 User user = new User();
                 user.setId(rs.getLong("id"));
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setAdmin(rs.getBoolean("admin"));
+                user.setImage(img);
                 list.add(user);
             }
         } catch (Exception e) {

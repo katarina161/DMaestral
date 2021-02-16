@@ -16,6 +16,7 @@ import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
 import rs.ac.bg.fon.ps.domain.User;
+import rs.ac.bg.fon.ps.domain.UserImage;
 import rs.ac.bg.fon.ps.transfer.RequestObject;
 import rs.ac.bg.fon.ps.transfer.ResponseObject;
 import rs.ac.bg.fon.ps.util.Receiver;
@@ -190,6 +191,37 @@ public class Communication extends Thread {
                             MainCordinator.getInstance().getSearchInvoicesController().setFilteredInvoices((List<Invoice>) response.getResult());
                         } else {
                             MainCordinator.getInstance().getSearchInvoicesController().filterInvoicesFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GET_ALL_IMAGES:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getUserController().fillCmbImages((List<UserImage>) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getUserController().viewInitialisationFailed();
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GET_ALL_USERS:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getSearchUsersController().fillTblUsers((List<User>) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getSearchUsersController().viewInitialisationFailed();
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GET_FILTERED_USERS:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getSearchUsersController().setFilteredUsers((List<User>) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getSearchUsersController().filterUsersFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case REFRESH_USERS:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().refreshUsersView((List<User>) response.getResult());
+                        } else {
                             System.err.println(response.getMessage());
                         }
                         break;
