@@ -541,7 +541,7 @@ public class InvoiceController {
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Update invoice failed.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Update invoice failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void processSuccess() {

@@ -7,16 +7,30 @@ package rs.ac.bg.fon.ps.main;
 
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
+import rs.ac.bg.fon.ps.view.form.FrmLoadingScreen;
 
 /**
  *
  * @author Katarina
  */
 public class Main {
-    
+
     public static void main(String[] args) {
-        Controller.getInstance().connect(9000);
-        MainCordinator.getInstance().openLogInForm();
+        FrmLoadingScreen frmLoadingScreen = new FrmLoadingScreen();
+        frmLoadingScreen.setVisible(true);
+
+        try {
+
+            for (int i = 0; i <= 100; i++) {
+                Thread.sleep(40);
+                frmLoadingScreen.jProgressBar.setValue(i);
+            }
+            frmLoadingScreen.setVisible(false);
+            Controller.getInstance().connect(9000);
+            MainCordinator.getInstance().openLogInForm();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
 }

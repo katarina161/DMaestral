@@ -194,4 +194,18 @@ public class Controller {
         communication.sendRequest(request);
     }
 
+    public void saveUser(User user) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.SAVE_USER);
+        request.setArgument(user);
+        communication.sendRequest(request);
+    }
+
+    public void updateUser(User user) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.UPDATE_USER);
+        request.setArgument(user);
+        communication.sendRequest(request);
+    }
+
 }

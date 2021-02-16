@@ -65,6 +65,7 @@ public class ClientThread extends Thread {
                         case UPDATE_PRODUCT:
                             Product updateProduct = (Product) request.getArgument();
                             Controller.getInstance().updateProduct(updateProduct);
+                            response.setResult(updateProduct);
                             break;
                         case DELETE_PRODUCT:
                             Product deleteProduct = (Product) request.getArgument();
@@ -103,6 +104,7 @@ public class ClientThread extends Thread {
                         case UPDATE_INVOICE:
                             Invoice updateInvoice = (Invoice) request.getArgument();
                             Controller.getInstance().updateInvoice(updateInvoice);
+                            response.setResult(updateInvoice);
                             break;
                         case REFRESH_INVOICES:
                             List<Invoice> refreshInvoices = Controller.getInstance().getAllInvoices();
@@ -146,6 +148,16 @@ public class ClientThread extends Thread {
                             List<User> refreshUsers = Controller.getInstance().getAllUsers();
                             response.setResult(refreshUsers);
                             Controller.getInstance().informAllUsers(response);
+                            break;
+                        case SAVE_USER:
+                            User addUser = (User) request.getArgument();
+                            Controller.getInstance().addUser(addUser);
+                            response.setResult(addUser);
+                            break;
+                        case UPDATE_USER:
+                            User updateUser = (User) request.getArgument();
+                            Controller.getInstance().updateUser(updateUser);
+                            response.setResult(updateUser);
                             break;
                     }
                 } catch (Exception e) {

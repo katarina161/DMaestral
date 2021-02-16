@@ -15,6 +15,8 @@ public enum Operation implements Serializable{
     GET_ALL_IMAGES,
     LOG_IN, 
     LOG_OUT,
+    SAVE_USER,
+    UPDATE_USER,
     GET_ALL_USERS,
     GET_FILTERED_USERS,
     REFRESH_USERS,

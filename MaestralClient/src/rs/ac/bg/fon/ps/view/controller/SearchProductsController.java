@@ -109,16 +109,6 @@ public class SearchProductsController {
     public void fillTableProducts(List<Product> products) {
         ProductTableModel model = new ProductTableModel(products);
         frmSearchProducts.getTblProducts().setModel(model);
-
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(frmSearchProducts.getTblProducts().getModel());
-        frmSearchProducts.getTblProducts().setRowSorter(sorter);
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-
-        sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
-        sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
-
-        sorter.setSortKeys(sortKeys);
-        sorter.sort();
     }
 
     public void refreshProductsView(List<Product> products) {

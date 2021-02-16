@@ -6,6 +6,7 @@
 package rs.ac.bg.fon.ps.so;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import rs.ac.bg.fon.ps.domain.Invoice;
 
 /**
@@ -36,6 +37,7 @@ public class CancelInvoice extends AbstractSystemOperation{
         repository.update(invoice);
         BigDecimal total = invoice.getTotal().multiply(new BigDecimal(-1));
         invoice.setTotal(total);
+        invoice.setDate(new Date(invoice.getDate().getTime()));
         repository.add(invoice);
     }
     

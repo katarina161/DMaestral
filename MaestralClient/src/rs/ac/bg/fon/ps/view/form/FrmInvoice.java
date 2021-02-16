@@ -83,7 +83,7 @@ public class FrmInvoice extends javax.swing.JDialog {
         btnProcess = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Invoice");
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -249,7 +249,6 @@ public class FrmInvoice extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel8.setText("Price:");
 
-        txtPrice.setBackground(new java.awt.Color(255, 255, 255));
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N

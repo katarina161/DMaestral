@@ -61,7 +61,7 @@ public class ProductController {
 
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frmProduct, "Please fill out all of the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmProduct, "Please fill out required fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -101,7 +101,7 @@ public class ProductController {
                     }
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frmProduct, "Please fill out all of the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmProduct, "Please fill out the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

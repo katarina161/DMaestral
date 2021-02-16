@@ -22,6 +22,7 @@ import rs.ac.bg.fon.ps.domain.UserImage;
 import rs.ac.bg.fon.ps.so.AbstractSystemOperation;
 import rs.ac.bg.fon.ps.so.AddInvoice;
 import rs.ac.bg.fon.ps.so.AddProduct;
+import rs.ac.bg.fon.ps.so.AddUser;
 import rs.ac.bg.fon.ps.so.CancelInvoice;
 import rs.ac.bg.fon.ps.so.DeleteInvoice;
 import rs.ac.bg.fon.ps.so.DeleteProduct;
@@ -38,6 +39,7 @@ import rs.ac.bg.fon.ps.so.LogIn;
 import rs.ac.bg.fon.ps.so.ProcessInvoice;
 import rs.ac.bg.fon.ps.so.UpdateInvoice;
 import rs.ac.bg.fon.ps.so.UpdateProduct;
+import rs.ac.bg.fon.ps.so.UpdateUser;
 import rs.ac.bg.fon.ps.thread.ClientThread;
 import rs.ac.bg.fon.ps.transfer.ResponseObject;
 
@@ -223,5 +225,15 @@ public class Controller {
         AbstractSystemOperation so = new GetFilteredUsers(columns, values);
         so.executeOperation();
         return ((GetFilteredUsers) so).getUsers();
+    }
+
+    public void addUser(User user) throws Exception {
+        AbstractSystemOperation so = new AddUser(user);
+        so.executeOperation();
+    }
+
+    public void updateUser(User user) throws Exception {
+        AbstractSystemOperation so = new UpdateUser(user);
+        so.executeOperation();
     }
 }

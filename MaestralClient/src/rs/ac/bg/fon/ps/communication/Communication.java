@@ -225,6 +225,22 @@ public class Communication extends Thread {
                             System.err.println(response.getMessage());
                         }
                         break;
+                    case SAVE_USER:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getUserController().saveUserSuccess((User) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getUserController().saveUserFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case UPDATE_USER:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getUserController().updateSuccess((User) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getUserController().updateFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
