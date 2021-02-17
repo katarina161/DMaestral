@@ -62,6 +62,8 @@ public class ProductController {
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(frmProduct, "Please fill out required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -102,6 +104,8 @@ public class ProductController {
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(frmProduct, "Please fill out the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -251,7 +255,7 @@ public class ProductController {
         frmProduct.getTxtPriceWithVAT().setText(String.valueOf(product.getPriceWithVAT().setScale(2, RoundingMode.HALF_UP).doubleValue()));
     }
 
-    private Product makeProductFromForm() {
+    private Product makeProductFromForm() throws NumberFormatException {
         Product product = new Product();
         product.setArticle(Long.parseLong(frmProduct.getTxtArticle().getText().trim()));
         product.setName(frmProduct.getTxtName().getText().trim());

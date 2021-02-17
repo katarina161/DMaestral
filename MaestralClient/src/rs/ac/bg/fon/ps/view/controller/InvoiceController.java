@@ -194,8 +194,10 @@ public class InvoiceController {
                     }
                 } catch (InvalidFormException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmInvoice, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmInvoice, "Date must be in 'dd.MM.yyyy' format", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -361,11 +363,11 @@ public class InvoiceController {
             message += "Please select a size. ";
             error = true;
         }
-        if (frmInvoice.getTxtPrice().getText().matches(".*[a-zA-Z-]+.*|0")) {
+        if (frmInvoice.getTxtPrice().getText().isEmpty() || frmInvoice.getTxtPrice().getText().matches(".*[a-zA-Z-]+.*|0")) {
             message += "Price must be a positive number. ";
             error = true;
         }
-        if (frmInvoice.getTxtQuantity().getText().matches(".*[a-zA-Z-]+.*|0")) {
+        if (frmInvoice.getTxtQuantity().getText().isEmpty() || frmInvoice.getTxtQuantity().getText().matches(".*[a-zA-Z-]+.*|0")) {
             message += "Quantity must be a positive number. ";
             error = true;
         }
