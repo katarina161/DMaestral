@@ -7,16 +7,14 @@ package rs.ac.bg.fon.ps.view.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import rs.ac.bg.fon.ps.controller.Controller;
+import rs.ac.bg.fon.ps.domain.Category;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.view.component.table.ProductTableModel;
 import rs.ac.bg.fon.ps.view.constant.Constants;
@@ -42,6 +40,26 @@ public class SearchProductsController {
     }
 
     private void addActionListener() {
+        frmSearchProducts.btnSearchAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchProducts(null);
+            }
+        });
+
+        frmSearchProducts.btnCancelFilterAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelFilter();
+            }
+
+            private void cancelFilter() {
+                frmSearchProducts.getTxtArticle().setText("");
+                frmSearchProducts.getCmbCategories().setSelectedIndex(0);
+                Controller.getInstance().refreshProductsView();
+            }
+        });
+
         frmSearchProducts.btnDetailsAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +106,7 @@ public class SearchProductsController {
 
     private void prepareView() {
         gatherDataForTblProducts();
+        Controller.getInstance().getAllCategories();
         setupComponents();
     }
 
@@ -112,8 +131,7 @@ public class SearchProductsController {
     }
 
     public void refreshProductsView(List<Product> products) {
-        ProductTableModel model = (ProductTableModel) frmSearchProducts.getTblProducts().getModel();
-        model.setProducts(products);
+        searchProducts(products);
     }
 
     public FrmSearchProducts getFrmSearchProducts() {
@@ -123,6 +141,58 @@ public class SearchProductsController {
     public void viewInitialisationFailed() {
         JOptionPane.showMessageDialog(frmSearchProducts, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
         frmSearchProducts.dispose();
+    }
+
+    public void fillCategories(List<Category> categories) {
+        frmSearchProducts.getCmbCategories().removeAllItems();
+        frmSearchProducts.getCmbCategories().addItem("All");
+        for (Category category : categories) {
+            frmSearchProducts.getCmbCategories().addItem(category);
+        }
+
+        frmSearchProducts.getCmbCategories().setSelectedIndex(0);
+    }
+
+    private void searchProducts(List<Product> products) {
+        List<String> columns = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
+
+        if (!frmSearchProducts.getTxtArticle().getText().isEmpty()) {
+            try {
+                int article = Integer.parseInt(frmSearchProducts.getTxtArticle().getText());
+                columns.add("article");
+                values.add(article);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(frmSearchProducts, "Article must be a number.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        if (frmSearchProducts.getCmbCategories().getSelectedIndex() > 0) {
+            Category c = (Category) frmSearchProducts.getCmbCategories().getSelectedItem();
+            columns.add("category_id");
+            values.add(c.getId());
+        }
+
+        if (!columns.isEmpty()) {
+            Controller.getInstance().getFilteredProducts(columns, values);
+        } else if (products == null) {
+            Controller.getInstance().refreshProductsView();
+        } else {
+            ProductTableModel model = (ProductTableModel) frmSearchProducts.getTblProducts().getModel();
+            model.setProducts(products);
+        }
+    }
+
+    public void setFilteredProducts(List<Product> products) {
+        ProductTableModel model = (ProductTableModel) frmSearchProducts.getTblProducts().getModel();
+        model.setProducts(products);
+        if (products.isEmpty()) {
+            JOptionPane.showMessageDialog(frmSearchProducts, "No matching products found!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void filterProductsFailed(String message) {
+        JOptionPane.showMessageDialog(frmSearchProducts, "Error occurred while filtering.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

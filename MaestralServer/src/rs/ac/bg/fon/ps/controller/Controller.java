@@ -34,6 +34,7 @@ import rs.ac.bg.fon.ps.so.GetAllProducts;
 import rs.ac.bg.fon.ps.so.GetAllSizes;
 import rs.ac.bg.fon.ps.so.GetAllUsers;
 import rs.ac.bg.fon.ps.so.GetFilteredInvoices;
+import rs.ac.bg.fon.ps.so.GetFilteredProducts;
 import rs.ac.bg.fon.ps.so.GetFilteredUsers;
 import rs.ac.bg.fon.ps.so.LogIn;
 import rs.ac.bg.fon.ps.so.ProcessInvoice;
@@ -235,5 +236,11 @@ public class Controller {
     public void updateUser(User user) throws Exception {
         AbstractSystemOperation so = new UpdateUser(user);
         so.executeOperation();
+    }
+
+    public List<Product> getFilteredProducts(List<String> columns, List<Object> values) throws Exception {
+        AbstractSystemOperation so = new GetFilteredProducts(columns, values);
+        so.executeOperation();
+        return ((GetFilteredProducts) so).getProducts();
     }
 }

@@ -17,7 +17,7 @@ public class UserTableModel extends AbstractTableModel{
     
     private List<User> users;
     private final String[] columnNames = new String[]{"Username", "Name", "Admin"};
-    private final Class[] columnClasses = new Class[]{String.class, String.class, boolean.class};
+    private final Class[] columnClasses = new Class[]{String.class, String.class, Boolean.class};
 
     public UserTableModel(List<User> users) {
         this.users = users;

@@ -25,6 +25,7 @@ public enum Operation implements Serializable{
     DELETE_PRODUCT,
     GET_ALL_PRODUCTS, 
     REFRESH_PRODUCTS,
+    GET_FILTERED_PRODUCTS,
     SAVE_INVOICE,
     UPDATE_INVOICE,
     DELETE_INVOICE,

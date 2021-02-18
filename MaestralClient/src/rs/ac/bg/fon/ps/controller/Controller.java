@@ -208,4 +208,12 @@ public class Controller {
         communication.sendRequest(request);
     }
 
+    public void getFilteredProducts(List<String> columns, List<Object> values) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GET_FILTERED_PRODUCTS);
+        request.setColumns(columns);
+        request.setValues(values);
+        communication.sendRequest(request);
+    }
+
 }

@@ -11,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -168,6 +167,9 @@ public class SearchUsersController {
     public void setFilteredUsers(List<User> users) {
         UserTableModel model = (UserTableModel) frmSearchUsers.getTblUsers().getModel();
         model.setUsers(users);
+        if (users.isEmpty()) {
+            JOptionPane.showMessageDialog(frmSearchUsers, "No matching users found", "Search", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void filterUsersFailed(String message) {

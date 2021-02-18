@@ -159,6 +159,12 @@ public class ClientThread extends Thread {
                             Controller.getInstance().updateUser(updateUser);
                             response.setResult(updateUser);
                             break;
+                        case GET_FILTERED_PRODUCTS:
+                            List<String> columnsProduct = request.getColumns();
+                            List<Object> valuesProduct = request.getValues();
+                            List<Product> filteredProducts = Controller.getInstance().getFilteredProducts(columnsProduct, valuesProduct);
+                            response.setResult(filteredProducts);
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

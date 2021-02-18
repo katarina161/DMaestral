@@ -315,6 +315,6 @@ public class UserController {
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmUser, "Error occured. Update user failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmUser, "An error occured. Update user failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

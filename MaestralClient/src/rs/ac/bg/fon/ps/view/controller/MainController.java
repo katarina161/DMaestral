@@ -131,11 +131,12 @@ public class MainController {
     public void logOutSuccess() {
         MainCordinator.getInstance().removeParams();
         frmMain.dispose();
+        JOptionPane.showMessageDialog(null, "You have successfully logged out!", "Log out", JOptionPane.INFORMATION_MESSAGE);
         MainCordinator.getInstance().openLogInForm();
     }
 
     public void logOutFailed() {
-        JOptionPane.showMessageDialog(frmMain, "Error! You're still logged in!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmMain, "Error! Log out failed!", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

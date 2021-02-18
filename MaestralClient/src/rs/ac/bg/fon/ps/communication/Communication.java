@@ -94,9 +94,19 @@ public class Communication extends Thread {
                         break;
                     case GET_ALL_CATEGORIES:
                         if (response.getException() == null) {
-                            MainCordinator.getInstance().getProductController().fillCategories((List<Category>) response.getResult());
+                            if (MainCordinator.getInstance().getProductController() != null) {
+                                MainCordinator.getInstance().getProductController().fillCategories((List<Category>) response.getResult());
+                            }
+                            if (MainCordinator.getInstance().getSearchProductsController() != null) {
+                                MainCordinator.getInstance().getSearchProductsController().fillCategories((List<Category>) response.getResult());
+                            }
                         } else {
-                            MainCordinator.getInstance().getProductController().viewInitialisationFailed();
+                            if (MainCordinator.getInstance().getProductController() != null) {
+                                MainCordinator.getInstance().getProductController().viewInitialisationFailed();
+                            }
+                            if (MainCordinator.getInstance().getSearchProductsController() != null) {
+                                MainCordinator.getInstance().getSearchProductsController().viewInitialisationFailed();
+                            }
                         }
                         break;
                     case GET_ALL_SIZES:
@@ -238,6 +248,14 @@ public class Communication extends Thread {
                             MainCordinator.getInstance().getUserController().updateSuccess((User) response.getResult());
                         } else {
                             MainCordinator.getInstance().getUserController().updateFailed(response.getMessage());
+                            System.err.println(response.getMessage());
+                        }
+                        break;
+                    case GET_FILTERED_PRODUCTS:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getSearchProductsController().setFilteredProducts((List<Product>) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getSearchProductsController().filterProductsFailed(response.getMessage());
                             System.err.println(response.getMessage());
                         }
                         break;
