@@ -5,7 +5,6 @@
  */
 package rs.ac.bg.fon.ps.so;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;

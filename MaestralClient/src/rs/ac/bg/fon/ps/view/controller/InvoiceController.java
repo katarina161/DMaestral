@@ -543,7 +543,7 @@ public class InvoiceController {
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Update invoice failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Update invoice failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void processSuccess() {
@@ -554,7 +554,7 @@ public class InvoiceController {
     }
 
     public void processFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Process invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Process invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void deleteSuccess() {
@@ -564,7 +564,7 @@ public class InvoiceController {
     }
 
     public void deleteFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Delete invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Delete invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void cancelSuccess() {
@@ -575,7 +575,7 @@ public class InvoiceController {
     }
 
     public void cancelFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Error occured. Cancel invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Cancel invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

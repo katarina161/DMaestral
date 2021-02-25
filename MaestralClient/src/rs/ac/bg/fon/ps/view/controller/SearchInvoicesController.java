@@ -221,6 +221,9 @@ public class SearchInvoicesController {
     public void setFilteredInvoices(List<Invoice> invoices) {
         InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
         model.setInvoices(invoices);
+        if (invoices.isEmpty()) {
+            JOptionPane.showMessageDialog(frmSearchInvoices, "No matching invoices fonud!", "Search", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void filterInvoicesFailed(String message) {

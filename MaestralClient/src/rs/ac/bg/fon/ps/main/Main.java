@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.main;
 
+import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmLoadingScreen;
@@ -31,6 +32,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        JOptionPane.showMessageDialog(null, "An error occured. Cancel invoice failed.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
