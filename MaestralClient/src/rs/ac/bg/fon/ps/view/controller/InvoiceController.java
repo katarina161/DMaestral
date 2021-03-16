@@ -9,8 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
@@ -21,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -31,6 +35,7 @@ import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.Size;
 import rs.ac.bg.fon.ps.domain.User;
 import rs.ac.bg.fon.ps.exception.InvalidFormException;
+import rs.ac.bg.fon.ps.view.component.SaveFileChooser;
 import rs.ac.bg.fon.ps.view.component.table.InvoiceItemTableModel;
 import rs.ac.bg.fon.ps.view.constant.Constants;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
@@ -187,7 +192,7 @@ public class InvoiceController {
                             JOptionPane.YES_NO_OPTION);
                     if (answer == 0) {
                         validateForm();
-                        
+
                         Invoice invoice = makeInvoiceFromForm();
                         invoice.setDate(new Date());
                         Controller.getInstance().processInvoice(invoice);
@@ -234,6 +239,24 @@ public class InvoiceController {
                     Controller.getInstance().cancelInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
                 }
             }
+        });
+
+        frmInvoice.lblPDFAddMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Controller.getInstance().generatePDF((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                frmInvoice.getLblPDF().setIcon(new ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/pdf2.png")));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                frmInvoice.getLblPDF().setIcon(new ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/pdf.png")));
+            }
+            
         });
     }
 
@@ -321,6 +344,7 @@ public class InvoiceController {
                 frmInvoice.getBtnEdit().setVisible(false);
                 frmInvoice.getBtnProcess().setVisible(false);
                 frmInvoice.getTblItems().setEnabled(true);
+                frmInvoice.getLblPDF().setVisible(false);
                 fillDefaultValues();
                 break;
             case FORM_DETAIL:
@@ -330,9 +354,9 @@ public class InvoiceController {
                 if (!admin) {
                     openCanceledInvoice();
                 } else {
-                    if (invoice.isProcessed() && !invoice.isCanceld()) {
+                    if (invoice.isProcessed() && !invoice.isCanceled()) {
                         openProcessedInvoice();
-                    } else if (invoice.isCanceld()) {
+                    } else if (invoice.isCanceled()) {
                         openCanceledInvoice();
                     } else {
                         openSavedInvoice();
@@ -385,7 +409,7 @@ public class InvoiceController {
 
         InvoiceItem item = new InvoiceItem();
         item.setProduct(product);
-        item.setSize(size);
+        item.setSize(size.getSizeNumber());
         item.setPrice(price);
         item.setQuantity(quantity);
 
@@ -440,6 +464,7 @@ public class InvoiceController {
         frmInvoice.getBtnRemoveItem().setVisible(false);
         frmInvoice.getPanelItem().setVisible(false);
         frmInvoice.getTblItems().setEnabled(false);
+        frmInvoice.getLblPDF().setVisible(true);
     }
 
     private void openCanceledInvoice() {
@@ -455,6 +480,7 @@ public class InvoiceController {
         frmInvoice.getBtnRemoveItem().setVisible(false);
         frmInvoice.getPanelItem().setVisible(false);
         frmInvoice.getTblItems().setEnabled(false);
+        frmInvoice.getLblPDF().setVisible(true);
     }
 
     private void openSavedInvoice() {
@@ -466,6 +492,7 @@ public class InvoiceController {
         frmInvoice.getBtnEdit().setVisible(true);
         frmInvoice.getBtnProcess().setVisible(true);
         frmInvoice.getTblItems().setEnabled(true);
+        frmInvoice.getLblPDF().setVisible(false);
     }
 
     private void fillForm(Invoice invoice) {
@@ -476,7 +503,7 @@ public class InvoiceController {
         if (invoice.isProcessed()) {
             frmInvoice.getCbProcessed().setSelected(true);
         }
-        if (invoice.isCanceld()) {
+        if (invoice.isCanceled()) {
             frmInvoice.getCbCanceled().setSelected(true);
         }
         InvoiceItemTableModel model = (InvoiceItemTableModel) frmInvoice.getTblItems().getModel();
@@ -543,7 +570,7 @@ public class InvoiceController {
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Update invoice failed.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Update invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void processSuccess() {
@@ -568,7 +595,7 @@ public class InvoiceController {
     }
 
     public void cancelSuccess() {
-        ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setCanceld(true);
+        ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setCanceled(true);
         setupComponents(FormMode.FORM_DETAIL);
         Controller.getInstance().refreshInvoicesView();
         JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully canceled.", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -576,6 +603,16 @@ public class InvoiceController {
 
     public void cancelFailed(String message) {
         JOptionPane.showMessageDialog(frmInvoice, "An error occured. Cancel invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void saveReport(byte[] report) {
+        SaveFileChooser chooser = new SaveFileChooser();
+        chooser.setSelectedFile(new File(((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).getNumber()));
+        chooser.savePdf(report);
+    }
+
+    public void generateReportFailed() {
+        JOptionPane.showMessageDialog(frmInvoice, "An error occured while trying to generate PDF file.\n", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }

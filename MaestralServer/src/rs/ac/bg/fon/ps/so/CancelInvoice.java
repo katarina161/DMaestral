@@ -26,14 +26,14 @@ public class CancelInvoice extends AbstractSystemOperation{
         if (!((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isProcessed()) {
             throw new Exception("You cannot cancel an invoice that is not processed.");
         }
-        if (((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isCanceld()) {
+        if (((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isCanceled()) {
             throw new Exception("This invoice is already cancel.");
         }
     }
 
     @Override
     protected void executeSpecificOperation() throws Exception {
-        invoice.setCanceld(true);
+        invoice.setCanceled(true);
         repository.update(invoice);
         BigDecimal total = invoice.getTotal().multiply(new BigDecimal(-1));
         invoice.setTotal(total);

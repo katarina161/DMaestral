@@ -60,7 +60,7 @@ public class InvoiceTableModel extends AbstractTableModel{
             case 3:
                 return invoice.isProcessed();
             case 4:
-                return invoice.isCanceld();
+                return invoice.isCanceled();
             default:
                 return "N/A";
         }

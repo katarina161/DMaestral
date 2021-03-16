@@ -67,7 +67,7 @@ public class FrmUser extends javax.swing.JDialog {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Employer");
+        setTitle("Employee");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

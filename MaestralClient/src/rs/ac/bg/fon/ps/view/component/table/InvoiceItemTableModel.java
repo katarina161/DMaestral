@@ -12,7 +12,6 @@ import javax.swing.table.AbstractTableModel;
 import rs.ac.bg.fon.ps.domain.Invoice;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;
 import rs.ac.bg.fon.ps.domain.Product;
-import rs.ac.bg.fon.ps.domain.Size;
 
 /**
  *
@@ -21,7 +20,7 @@ import rs.ac.bg.fon.ps.domain.Size;
 public class InvoiceItemTableModel extends AbstractTableModel {
     
     private final String[] columnNames = new String[]{"Order No.", "Product", "Size", "Price", "Quantity"};
-    private final Class[] columnClasses = new Class[]{Integer.class, Product.class, Size.class, BigDecimal.class, Integer.class};
+    private final Class[] columnClasses = new Class[]{Integer.class, Product.class, Integer.class, BigDecimal.class, Integer.class};
     private Invoice invoice;
     
     public InvoiceItemTableModel() {
@@ -99,7 +98,7 @@ public class InvoiceItemTableModel extends AbstractTableModel {
         InvoiceItem item = null;
         for (int i = 0; i < invoice.getItems().size(); i++) {
             if (invoice.getItems().get(i).getProduct().equals(itm.getProduct())
-                    && invoice.getItems().get(i).getSize().equals(itm.getSize())) {
+                    && invoice.getItems().get(i).getSize() == itm.getSize()) {
                 item = invoice.getItems().get(i);
                 item.setQuantity(itm.getQuantity() + invoice.getItems().get(i).getQuantity());
             }

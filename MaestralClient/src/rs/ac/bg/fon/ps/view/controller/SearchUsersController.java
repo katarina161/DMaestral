@@ -74,7 +74,7 @@ public class SearchUsersController {
                 int row = frmSearchUsers.getTblUsers().getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(frmSearchUsers,
-                            "Please select an employer.",
+                            "Please select an employee.",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 } else {

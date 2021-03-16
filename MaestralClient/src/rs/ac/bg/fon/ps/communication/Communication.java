@@ -259,6 +259,14 @@ public class Communication extends Thread {
                             System.err.println(response.getMessage());
                         }
                         break;
+                    case GENERATE_REPORT:
+                        if (response.getException() == null) {
+                            MainCordinator.getInstance().getInvoiceController().saveReport((byte[]) response.getResult());
+                        } else {
+                            MainCordinator.getInstance().getInvoiceController().generateReportFailed();
+                            System.err.println(response.getMessage());
+                        }
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

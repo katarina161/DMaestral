@@ -216,4 +216,11 @@ public class Controller {
         communication.sendRequest(request);
     }
 
+    public void generatePDF(Invoice invoice) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.GENERATE_REPORT);
+        request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
 }

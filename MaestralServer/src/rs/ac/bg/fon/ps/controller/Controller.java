@@ -43,6 +43,7 @@ import rs.ac.bg.fon.ps.so.UpdateProduct;
 import rs.ac.bg.fon.ps.so.UpdateUser;
 import rs.ac.bg.fon.ps.thread.ClientThread;
 import rs.ac.bg.fon.ps.transfer.ResponseObject;
+import rs.ac.bg.fon.ps.util.InvoiceReportGenerator;
 
 /**
  *
@@ -242,5 +243,11 @@ public class Controller {
         AbstractSystemOperation so = new GetFilteredProducts(columns, values);
         so.executeOperation();
         return ((GetFilteredProducts) so).getProducts();
+    }
+
+    public byte[] generateReport(Invoice invoiceReport) throws Exception{
+        byte[] report = null;
+        report = InvoiceReportGenerator.generateReport(invoiceReport);
+        return report;
     }
 }

@@ -8,6 +8,7 @@ package rs.ac.bg.fon.ps.view.form;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -79,6 +80,7 @@ public class FrmInvoice extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        lblPDF = new javax.swing.JLabel();
         btnEdit = new javax.swing.JButton();
         btnProcess = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -373,18 +375,27 @@ public class FrmInvoice extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/pdf.png"))); // NOI18N
+        lblPDF.setToolTipText("Download PDF");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(717, 717, 717)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(lblPDF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 657, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lblPDF)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnEdit.setBackground(new java.awt.Color(204, 204, 204));
@@ -509,6 +520,7 @@ public class FrmInvoice extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblAddItemError;
     private javax.swing.JLabel lblInvoicePic;
+    private javax.swing.JLabel lblPDF;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel panelInvoice;
@@ -618,6 +630,10 @@ public class FrmInvoice extends javax.swing.JDialog {
         return lblAddItemError;
     }
 
+    public JLabel getLblPDF() {
+        return lblPDF;
+    }
+
     public void btnAddItemAddActionListener(ActionListener actionListener) {
         btnAddItem.addActionListener(actionListener);
     }
@@ -652,6 +668,10 @@ public class FrmInvoice extends javax.swing.JDialog {
 
     public void btnCancelAddActionListener(ActionListener actionListener) {
         btnCancel.addActionListener(actionListener);
+    }
+
+    public void lblPDFAddMouseListener(MouseAdapter mouseAdapter) {
+        lblPDF.addMouseListener(mouseAdapter);
     }
     
 }

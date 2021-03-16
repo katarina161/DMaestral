@@ -94,7 +94,7 @@ public class FrmMain extends javax.swing.JFrame {
         menuMain.add(menuInvoice);
 
         menuEmployer.setForeground(new java.awt.Color(2, 26, 126));
-        menuEmployer.setText("Employer");
+        menuEmployer.setText("Employee");
         menuEmployer.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
 
         miEmployerNew.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

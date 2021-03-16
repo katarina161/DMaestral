@@ -77,7 +77,7 @@ public class FrmSearchUsers extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Employers");
+        jLabel2.setText("Employees");
 
         lblCancelFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/x-button.png"))); // NOI18N
 

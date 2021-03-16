@@ -18,10 +18,11 @@ import java.util.Objects;
  */
 public class InvoiceItem implements DomainObject, Serializable {
 
+    private Long id;
     private Invoice invoice;
     private int orderNumber;
     private Product product;
-    private Size size;
+    private int size;
     private int quantity;
     private BigDecimal price;
     private BigDecimal total;
@@ -29,7 +30,7 @@ public class InvoiceItem implements DomainObject, Serializable {
     public InvoiceItem() {
     }
 
-    public InvoiceItem(Invoice invoice, int orderNumber, Product product, Size size, int quantity, BigDecimal price, BigDecimal total) {
+    public InvoiceItem(Invoice invoice, int orderNumber, Product product, int size, int quantity, BigDecimal price, BigDecimal total) {
         this.invoice = invoice;
         this.orderNumber = orderNumber;
         this.product = product;
@@ -37,6 +38,14 @@ public class InvoiceItem implements DomainObject, Serializable {
         this.quantity = quantity;
         this.price = price;
         this.total = total;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BigDecimal getTotal() {
@@ -71,11 +80,11 @@ public class InvoiceItem implements DomainObject, Serializable {
         this.product = product;
     }
 
-    public Size getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
@@ -132,28 +141,28 @@ public class InvoiceItem implements DomainObject, Serializable {
 
     @Override
     public String getParameterNames() {
-        return "invoice_id, order_number, product_article, size_id, quantity, price, total";
+        return "invoice_id, order_number, product_article, size, quantity, price, total";
     }
 
     @Override
     public String getParameterValues() {
         return String.format("%s, %s, %s, %s, %s, %s, %s",
-                invoice.getId(), orderNumber, product.getArticle(), size.getId(), quantity, price, total);
+                invoice.getId(), orderNumber, product.getArticle(), size, quantity, price, total);
     }
 
     @Override
     public String getPrimaryKeyName() {
-        return "invoice_id";
+        return "id";
     }
 
     @Override
     public Long getPrimaryKeyValue() {
-        return invoice.getId();
+        return id;
     }
 
     @Override
     public void setPrimaryKey(Long key) {
-        this.invoice.setId(key);
+        this.id = key;
     }
 
     @Override
@@ -178,22 +187,20 @@ public class InvoiceItem implements DomainObject, Serializable {
             while (rs.next()) {
                 Invoice i = new Invoice();
                 i.setId(rs.getLong("i.id"));
-                
+
                 Product p = new Product();
                 p.setArticle(rs.getLong("ii.product_article"));
-                
-                Size s = new Size();
-                s.setId(rs.getLong("ii.size_id"));
 
                 InvoiceItem ii = new InvoiceItem();
                 ii.setInvoice(i);
+                ii.setId(rs.getLong("ii.id"));
                 ii.setOrderNumber(rs.getInt("ii.order_number"));
                 ii.setQuantity(rs.getInt("ii.quantity"));
                 ii.setPrice(rs.getBigDecimal("ii.price"));
                 ii.setTotal(rs.getBigDecimal("ii.total"));
                 ii.setProduct(p);
-                ii.setSize(s);
-                
+                ii.setSize(rs.getInt("ii.size"));
+
                 list.add(ii);
             }
         } catch (Exception e) {

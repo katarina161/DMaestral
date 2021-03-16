@@ -43,9 +43,7 @@ public class GetAllInvoices extends AbstractSystemOperation {
                     = (List<InvoiceItem>) repository.getAll(new InvoiceItem(), Arrays.asList("invoice_id"), Arrays.asList(i.getId()));
             for (InvoiceItem item: items) {
                 Product p = (Product) repository.getByPrimaryKey(new Product(), item.getProduct().getArticle());
-                Size s = (Size) repository.getByPrimaryKey(new Size(), item.getSize().getId());
                 item.setProduct(p);
-                item.setSize(s);
             }
             i.setItems(items);
         }

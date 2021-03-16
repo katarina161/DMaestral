@@ -165,6 +165,11 @@ public class ClientThread extends Thread {
                             List<Product> filteredProducts = Controller.getInstance().getFilteredProducts(columnsProduct, valuesProduct);
                             response.setResult(filteredProducts);
                             break;
+                        case GENERATE_REPORT:
+                            Invoice invoiceReport = (Invoice) request.getArgument();
+                            byte[] report = Controller.getInstance().generateReport(invoiceReport);
+                            response.setResult(report);
+                            break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

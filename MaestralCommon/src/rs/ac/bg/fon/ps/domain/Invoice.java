@@ -25,7 +25,7 @@ public class Invoice implements DomainObject, Serializable {
     private Date date;
     private BigDecimal total;
     private boolean processed;
-    private boolean canceld;
+    private boolean canceled;
     private User user;
     private List<InvoiceItem> items;
 
@@ -40,7 +40,7 @@ public class Invoice implements DomainObject, Serializable {
         this.date = date;
         this.total = total;
         this.processed = processed;
-        this.canceld = canceld;
+        this.canceled = canceld;
         this.user = user;
     }
 
@@ -100,12 +100,12 @@ public class Invoice implements DomainObject, Serializable {
         this.processed = processed;
     }
 
-    public boolean isCanceld() {
-        return canceld;
+    public boolean isCanceled() {
+        return canceled;
     }
 
-    public void setCanceld(boolean canceld) {
-        this.canceld = canceld;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
     public List<InvoiceItem> getItems() {
@@ -156,7 +156,7 @@ public class Invoice implements DomainObject, Serializable {
     @Override
     public String getParameterValues() {
         return String.format("'%s', '%s', '%s', %s, %s, %s, %s",
-                number, partner, new java.sql.Date(date.getTime()), total, processed, canceld, user.getId());
+                number, partner, new java.sql.Date(date.getTime()), total, processed, canceled, user.getId());
     }
 
     @Override
@@ -191,7 +191,7 @@ public class Invoice implements DomainObject, Serializable {
                 .append(", date='").append(new java.sql.Date(date.getTime())).append("'")
                 .append(", total=").append(total)
                 .append(", processed=").append(processed)
-                .append(", canceled=").append(canceld)
+                .append(", canceled=").append(canceled)
                 .append(", user_id=").append(user.getId());
         return sb.toString();
     }
@@ -215,7 +215,7 @@ public class Invoice implements DomainObject, Serializable {
                 i.setDate(new java.util.Date(rs.getDate("i.date").getTime()));
                 i.setTotal(rs.getBigDecimal("i.total"));
                 i.setProcessed(rs.getBoolean("i.processed"));
-                i.setCanceld(rs.getBoolean("i.canceled"));
+                i.setCanceled(rs.getBoolean("i.canceled"));
                 i.setUser(u);
                 
                 list.add(i);
