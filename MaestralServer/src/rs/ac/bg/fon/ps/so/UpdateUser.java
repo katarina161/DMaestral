@@ -25,7 +25,7 @@ public class UpdateUser extends AbstractSystemOperation{
     protected void checkPreconditions() throws Exception {
         List<User> dbUsers = (List<User>) repository.getAll(new User(), Arrays.asList("username"), Arrays.asList(user.getUsername()));
         if (!dbUsers.isEmpty() && !(dbUsers.get(0).getId()).equals(user.getId())) {
-            throw new Exception("That username is already taken.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("UpdateUser.ERROR"));
         }
     }
 

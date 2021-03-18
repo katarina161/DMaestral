@@ -74,13 +74,15 @@ public class FrmProduct extends javax.swing.JDialog {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("New Product");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        setTitle(bundle.getString("FrmProduct.title.NEW_PRODUCT")); // NOI18N
 
+        panelProduct.setBackground(new java.awt.Color(255, 255, 255));
         panelProduct.setBorder(javax.swing.BorderFactory.createTitledBorder("Product"));
         panelProduct.setPreferredSize(new java.awt.Dimension(800, 371));
 
         lblArticle.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblArticle.setText("Article:");
+        lblArticle.setText(bundle.getString("FrmProduct.label.ARTICLE")); // NOI18N
         lblArticle.setMaximumSize(null);
         lblArticle.setPreferredSize(new java.awt.Dimension(110, 29));
 
@@ -88,14 +90,14 @@ public class FrmProduct extends javax.swing.JDialog {
         txtArticle.setPreferredSize(new java.awt.Dimension(69, 29));
 
         lblName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblName.setText("Name:");
+        lblName.setText(bundle.getString("FrmProduct.label.NAME")); // NOI18N
         lblName.setPreferredSize(new java.awt.Dimension(110, 29));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtName.setPreferredSize(new java.awt.Dimension(69, 29));
 
         lblCategory.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblCategory.setText("Category:");
+        lblCategory.setText(bundle.getString("FrmProduct.label.CATEGORY")); // NOI18N
         lblCategory.setPreferredSize(new java.awt.Dimension(95, 29));
 
         cmbCategory.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -104,7 +106,7 @@ public class FrmProduct extends javax.swing.JDialog {
         cmbCategory.setPreferredSize(new java.awt.Dimension(65, 29));
 
         lblDescription.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblDescription.setText("Description:");
+        lblDescription.setText(bundle.getString("FrmProduct.label.DESCRIPTION")); // NOI18N
 
         txtDescription.setColumns(20);
         txtDescription.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -115,11 +117,11 @@ public class FrmProduct extends javax.swing.JDialog {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         lblPriceWithoutVat.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblPriceWithoutVat.setText("Price without VAT:");
+        lblPriceWithoutVat.setText(bundle.getString("FrmProduct.label.PRICE_WITHOUT_VAT")); // NOI18N
         lblPriceWithoutVat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lblPriceWithVat.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        lblPriceWithVat.setText("Price with VAT:");
+        lblPriceWithVat.setText(bundle.getString("FrmProduct.label.PRICE_WITH_VAT")); // NOI18N
         lblPriceWithVat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         txtPriceWithoutVAT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -131,6 +133,7 @@ public class FrmProduct extends javax.swing.JDialog {
         });
 
         txtPriceWithVAT.setEditable(false);
+        txtPriceWithVAT.setBackground(new java.awt.Color(210, 225, 255));
         txtPriceWithVAT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtPriceWithVAT.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtPriceWithVAT.setPreferredSize(new java.awt.Dimension(77, 29));
@@ -141,16 +144,20 @@ public class FrmProduct extends javax.swing.JDialog {
         listSelectedSizes.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jScrollPane2.setViewportView(listSelectedSizes);
 
-        lblSelectedSizes.setText("Selected sizes:");
+        lblSelectedSizes.setText(bundle.getString("FrmProduct.label.SELECTED_SIZES")); // NOI18N
 
         cmbSize.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         cmbSize.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnAddSize.setBackground(new java.awt.Color(2, 26, 126));
         btnAddSize.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnAddSize.setText("Add Size");
+        btnAddSize.setForeground(new java.awt.Color(255, 255, 255));
+        btnAddSize.setText(bundle.getString("FrmProduct.button.ADD_SIZE")); // NOI18N
 
+        btnRemoveSize.setBackground(new java.awt.Color(2, 26, 126));
         btnRemoveSize.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        btnRemoveSize.setText("Remove Size");
+        btnRemoveSize.setForeground(new java.awt.Color(255, 255, 255));
+        btnRemoveSize.setText(bundle.getString("FrmProduct.button.REMOVE_SIZE")); // NOI18N
 
         lblArticleError.setForeground(new java.awt.Color(229, 10, 10));
 
@@ -159,16 +166,19 @@ public class FrmProduct extends javax.swing.JDialog {
         lblSizeError.setForeground(new java.awt.Color(229, 10, 10));
 
         lblVATPercentage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblVATPercentage.setText("VAT rate in %:");
+        lblVATPercentage.setText(bundle.getString("FrmProduct.label.VAT%")); // NOI18N
 
         lblPriceWithoutWatError.setForeground(new java.awt.Color(229, 10, 10));
 
         txtVATPercentage.setEditable(false);
+        txtVATPercentage.setBackground(new java.awt.Color(210, 225, 255));
         txtVATPercentage.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtVATPercentage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtVATPercentage.setText("20");
 
-        btnCalculatePriceWithVAT.setText("Calculate");
+        btnCalculatePriceWithVAT.setBackground(new java.awt.Color(2, 26, 126));
+        btnCalculatePriceWithVAT.setForeground(new java.awt.Color(255, 255, 255));
+        btnCalculatePriceWithVAT.setText(bundle.getString("FrmProduct.button.CALCULATE")); // NOI18N
 
         lblCategoryError.setForeground(new java.awt.Color(229, 10, 10));
 
@@ -179,20 +189,15 @@ public class FrmProduct extends javax.swing.JDialog {
             .addGroup(panelProductLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelProductLayout.createSequentialGroup()
-                        .addGroup(panelProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblArticleError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(lblNameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelProductLayout.createSequentialGroup()
-                        .addComponent(lblDescription)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblArticle, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panelProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtArticle, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -241,6 +246,14 @@ public class FrmProduct extends javax.swing.JDialog {
                                     .addComponent(cmbCategory, 0, 252, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(panelProductLayout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(lblNameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(712, Short.MAX_VALUE))
+            .addGroup(panelProductLayout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(lblArticleError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(600, Short.MAX_VALUE))
         );
 
         panelProductLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCalculatePriceWithVAT, lblPriceWithoutWatError, txtPriceWithVAT, txtPriceWithoutVAT});
@@ -322,29 +335,29 @@ public class FrmProduct extends javax.swing.JDialog {
         panelProductLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lblVATPercentage, txtVATPercentage});
 
         btnSave.setBackground(new java.awt.Color(2, 26, 126));
-        btnSave.setFont(new java.awt.Font("Bauhaus 93", 1, 24)); // NOI18N
+        btnSave.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         btnSave.setForeground(new java.awt.Color(255, 255, 255));
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("FrmProduct.button.SAVE")); // NOI18N
 
         btnReset.setBackground(new java.awt.Color(2, 26, 126));
-        btnReset.setFont(new java.awt.Font("Bauhaus 93", 1, 24)); // NOI18N
+        btnReset.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         btnReset.setForeground(new java.awt.Color(255, 255, 255));
-        btnReset.setText("Reset");
+        btnReset.setText(bundle.getString("FrmProduct.button.RESET")); // NOI18N
 
         btnRevert.setBackground(new java.awt.Color(2, 26, 126));
-        btnRevert.setFont(new java.awt.Font("Bauhaus 93", 1, 24)); // NOI18N
+        btnRevert.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         btnRevert.setForeground(new java.awt.Color(255, 255, 255));
-        btnRevert.setText("Revert");
+        btnRevert.setText(bundle.getString("FrmProduct.button.REVERT")); // NOI18N
 
         btnUpdate.setBackground(new java.awt.Color(2, 26, 126));
-        btnUpdate.setFont(new java.awt.Font("Bauhaus 93", 1, 24)); // NOI18N
+        btnUpdate.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdate.setText("Update");
+        btnUpdate.setText(bundle.getString("FrmProduct.button.UPDATE")); // NOI18N
 
         btnDelete.setBackground(new java.awt.Color(204, 0, 0));
-        btnDelete.setFont(new java.awt.Font("Bauhaus 93", 1, 24)); // NOI18N
+        btnDelete.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("Delete");
+        btnDelete.setText(bundle.getString("FrmProduct.button.DELETE")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -355,12 +368,12 @@ public class FrmProduct extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(183, 183, 183)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRevert, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
+                        .addComponent(btnRevert, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE))

@@ -53,6 +53,8 @@ public class InvoiceController {
 
     private final FrmInvoice frmInvoice;
     private final FrmMain parent;
+    private final Object[] options = {java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.YES"),
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.NO")};
 
     public InvoiceController(FrmInvoice frmInvoice) {
         this.frmInvoice = frmInvoice;
@@ -92,15 +94,19 @@ public class InvoiceController {
                 int row = frmInvoice.getTblItems().getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(frmInvoice,
-                            "Choose an item that you want to be removed from list.",
-                            "Error",
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.REMOVE_ITEM_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.REMOVE_ITEM_TITLE"),
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     int answer
-                            = JOptionPane.showConfirmDialog(frmInvoice,
-                                    "Are you sure you want to remove selected invoice item?",
-                                    "Remove",
-                                    JOptionPane.YES_NO_OPTION);
+                            = JOptionPane.showOptionDialog(frmInvoice,
+                                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.REMOVE_ITEM"),
+                                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.REMOVE_ITEM_TITLE"),
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    options,
+                                    options[0]);
                     if (answer == 0) {
                         InvoiceItemTableModel model = (InvoiceItemTableModel) frmInvoice.getTblItems().getModel();
                         model.removeveInvoiceItem(row);
@@ -141,10 +147,16 @@ public class InvoiceController {
                     Controller.getInstance().saveInvoice(invoice);
                 } catch (InvalidFormException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            ex.getMessage(),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, "Date must be in 'dd.MM.yyyy' format", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DATE_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -157,10 +169,14 @@ public class InvoiceController {
 
             private void updateInvoice() {
                 try {
-                    int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                            "Are you sure you want to make this changes",
-                            "Change invoice",
-                            JOptionPane.YES_NO_OPTION);
+                    int answer = JOptionPane.showOptionDialog(frmInvoice,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_TITLE"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]);
                     if (answer == 0) {
                         validateForm();
 
@@ -169,10 +185,16 @@ public class InvoiceController {
                     }
                 } catch (InvalidFormException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            ex.getMessage(),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, "Date must be in 'dd.MM.yyyy' format", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DATE_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -185,11 +207,14 @@ public class InvoiceController {
 
             private void processInvoice() {
                 try {
-                    int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                            "Are you sure you want to process invoice?\n"
-                            + "After that you won't be able to make any changes?",
-                            "Process invoice",
-                            JOptionPane.YES_NO_OPTION);
+                    int answer = JOptionPane.showOptionDialog(frmInvoice,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_TITLE"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]);
                     if (answer == 0) {
                         validateForm();
 
@@ -199,10 +224,16 @@ public class InvoiceController {
                     }
                 } catch (InvalidFormException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            ex.getMessage(),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 } catch (ParseException ex) {
                     Logger.getLogger(InvoiceController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmInvoice, "Date must be in 'dd.MM.yyyy' format", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmInvoice,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DATE_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -214,10 +245,14 @@ public class InvoiceController {
             }
 
             private void deleteInvoice() {
-                int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                        "Are you sure you want to delete this invoice?",
-                        "Delete",
-                        JOptionPane.YES_NO_OPTION);
+                int answer = JOptionPane.showOptionDialog(frmInvoice,
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE"),
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE_TITLE"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 if (answer == 0) {
                     Controller.getInstance().deleteInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
                 }
@@ -231,10 +266,14 @@ public class InvoiceController {
             }
 
             private void cancelInvoice() {
-                int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                        "Are you sure you want to cancel this invoice?",
-                        "Exit",
-                        JOptionPane.YES_NO_OPTION);
+                int answer = JOptionPane.showOptionDialog(frmInvoice,
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL"),
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL_TITLE"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 if (answer == 0) {
                     Controller.getInstance().cancelInvoice((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE));
                 }
@@ -256,7 +295,7 @@ public class InvoiceController {
             public void mouseExited(MouseEvent e) {
                 frmInvoice.getLblPDF().setIcon(new ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/pdf.png")));
             }
-            
+
         });
     }
 
@@ -269,10 +308,14 @@ public class InvoiceController {
 
     private void closeForm() {
         if (frmInvoice.getBtnSave().isVisible() || frmInvoice.getBtnEdit().isVisible()) {
-            int answer = JOptionPane.showConfirmDialog(frmInvoice,
-                    "Are you sure you want to close this window, your changes won't be saved?",
-                    "Exit",
-                    JOptionPane.YES_NO_OPTION);
+            int answer = JOptionPane.showOptionDialog(frmInvoice,
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CLOSE"),
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CLOSE_TITLE"),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
             if (answer == 0) {
                 Controller.getInstance().refreshInvoicesView();
                 frmInvoice.dispose();
@@ -331,7 +374,7 @@ public class InvoiceController {
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
-                frmInvoice.setTitle("Create Invoice");
+                frmInvoice.setTitle(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.title.INVOICE_CREATE"));
                 frmInvoice.getTxtNumber().setEnabled(true);
                 frmInvoice.getTxtDate().setEnabled(true);
                 frmInvoice.getTxtPartner().setEnabled(true);
@@ -348,7 +391,7 @@ public class InvoiceController {
                 fillDefaultValues();
                 break;
             case FORM_DETAIL:
-                frmInvoice.setTitle("Invoice Details");
+                frmInvoice.setTitle(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.title.INVOICE"));
                 Invoice invoice = (Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE);
                 boolean admin = ((User) MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER)).isAdmin();
                 if (!admin) {
@@ -380,19 +423,19 @@ public class InvoiceController {
         boolean error = false;
 
         if (frmInvoice.getCmbProducts().getSelectedIndex() == -1) {
-            message += "Please select a product. ";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.ITEM_PRODUCT_ERROR");
             error = true;
         }
         if (frmInvoice.getCmbSizes().getComponentCount() > 0 && frmInvoice.getCmbSizes().getSelectedIndex() == -1) {
-            message += "Please select a size. ";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.ITEM_SIZE_ERROR");
             error = true;
         }
         if (frmInvoice.getTxtPrice().getText().isEmpty() || frmInvoice.getTxtPrice().getText().matches(".*[a-zA-Z-]+.*|0")) {
-            message += "Price must be a positive number. ";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.ITEM_PRICE_ERROR");
             error = true;
         }
         if (frmInvoice.getTxtQuantity().getText().isEmpty() || frmInvoice.getTxtQuantity().getText().matches(".*[a-zA-Z-]+.*|0")) {
-            message += "Quantity must be a positive number. ";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.ITEM_QUANTITY_ERROR");
             error = true;
         }
 
@@ -419,17 +462,17 @@ public class InvoiceController {
     private void validateForm() throws InvalidFormException {
         String message = "";
         if (frmInvoice.getTxtNumber().getText() == null || frmInvoice.getTxtNumber().getText().isEmpty()) {
-            message += "Enter an invoice number.\n";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.INVOICE_NUMBER_ERROR");
         }
         if (frmInvoice.getTxtDate().getText() == null || frmInvoice.getTxtDate().getText().isEmpty()) {
-            message += "Insert date.\n";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.INVOICE_DATE_ERROR");
         }
         if (frmInvoice.getTxtPartner().getText() == null || frmInvoice.getTxtPartner().getText().isEmpty()) {
-            message += "Insert partner.\n";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.INVOICE_PARTNER_ERROR");
         }
         InvoiceItemTableModel model = (InvoiceItemTableModel) frmInvoice.getTblItems().getModel();
         if (model.getItems().isEmpty()) {
-            message += "Add at least one invoice item.\n";
+            message += java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.INVOICE_ITEM_ERROR");
         }
         if (!message.isEmpty()) {
             throw new InvalidFormException(message);
@@ -536,15 +579,20 @@ public class InvoiceController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmInvoice, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmInvoice.dispose();
     }
 
     public void saveInvoiceSuccess(Invoice invoice) {
         Controller.getInstance().refreshInvoicesView();
+        String message = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_SUCCESS");
+        String[] print = message.split("=");
         JOptionPane.showMessageDialog(frmInvoice,
-                "Invoice (id=" + invoice.getId() + ") successfully saved!",
-                "Success",
+                print[0] + "=" + invoice.getId() + print[1],
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_TITLE"),
                 JOptionPane.INFORMATION_MESSAGE);
 
         MainCordinator.getInstance().addParam(Constants.PARAM_INVOICE, invoice);
@@ -552,7 +600,10 @@ public class InvoiceController {
     }
 
     public void saveInvoiceFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "Save invoice failed!\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.SAVE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public FrmInvoice getFrmInvoice() {
@@ -566,43 +617,67 @@ public class InvoiceController {
     public void updateSuccess(Invoice invoice) {
         Controller.getInstance().refreshInvoicesView();
         MainCordinator.getInstance().addParam(Constants.PARAM_INVOICE, invoice);
-        JOptionPane.showMessageDialog(frmInvoice, "Invoice successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Update invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_ERROR"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.UPDATE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void processSuccess() {
         ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setProcessed(true);
         setupComponents(FormMode.FORM_DETAIL);
         Controller.getInstance().refreshInvoicesView();
-        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully processed.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void processFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Process invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PROCESS_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void deleteSuccess() {
         Controller.getInstance().refreshInvoicesView();
-        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
         frmInvoice.dispose();
     }
 
     public void deleteFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Delete invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.DELETE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void cancelSuccess() {
         ((Invoice) MainCordinator.getInstance().getParam(Constants.PARAM_INVOICE)).setCanceled(true);
         setupComponents(FormMode.FORM_DETAIL);
         Controller.getInstance().refreshInvoicesView();
-        JOptionPane.showMessageDialog(frmInvoice, "Invoice is successfully canceled.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void cancelFailed(String message) {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured. Cancel invoice failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL_SUCCESS") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.CANCEL_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void saveReport(byte[] report) {
@@ -612,7 +687,10 @@ public class InvoiceController {
     }
 
     public void generateReportFailed() {
-        JOptionPane.showMessageDialog(frmInvoice, "An error occured while trying to generate PDF file.\n", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmInvoice,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.msg.PDF_ERROR"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }

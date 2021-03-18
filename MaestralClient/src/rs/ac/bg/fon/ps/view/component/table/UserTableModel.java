@@ -16,7 +16,10 @@ import rs.ac.bg.fon.ps.domain.User;
 public class UserTableModel extends AbstractTableModel{
     
     private List<User> users;
-    private final String[] columnNames = new String[]{"Username", "Name", "Admin"};
+    private final String[] columnNames = new String[]{
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchUsers.table.USERNAME"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchUsers.table.NAME"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchUsers.table.ADMIN")};
     private final Class[] columnClasses = new Class[]{String.class, String.class, Boolean.class};
 
     public UserTableModel(List<User> users) {

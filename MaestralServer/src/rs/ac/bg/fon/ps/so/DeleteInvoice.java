@@ -23,10 +23,10 @@ public class DeleteInvoice extends AbstractSystemOperation{
     @Override
     protected void checkPreconditions() throws Exception {
         if (repository.getByPrimaryKey(new Invoice(), invoice.getId()) == null) {
-            throw new Exception("This invoice is already deleted!");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("DeleteInvoice.ALREADY_DELETED"));
         }
         if (invoice.isProcessed()) {
-            throw new Exception("You cannot delete an invoice if it's already processed.\nYou can only cancel it.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("DeleteInvoice.DELETE_ERROR"));
         }
     }
 

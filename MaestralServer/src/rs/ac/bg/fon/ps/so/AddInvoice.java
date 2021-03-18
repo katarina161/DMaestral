@@ -24,7 +24,11 @@ public class AddInvoice extends AbstractSystemOperation {
     @Override
     protected void checkPreconditions() throws Exception {
         if (!repository.getAll(new Invoice(), Arrays.asList("number"), Arrays.asList(invoice.getNumber())).isEmpty()) {
-            throw new Exception("Invoice with number " +invoice.getNumber()+ " \nalready exist in the system.");
+            StringBuilder sb = new StringBuilder();
+            sb.append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("AddInvoice.ERROR_1"))
+                    .append(invoice.getNumber())
+                    .append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("AddInvoice.ERROR_2"));
+            throw new Exception(sb.toString());
         }
     }
 

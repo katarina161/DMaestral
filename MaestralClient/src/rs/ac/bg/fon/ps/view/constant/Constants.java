@@ -16,7 +16,5 @@ public class Constants {
     public static final String PARAM_PRODUCT = "PRODUCT";
     public static final String PARAM_INVOICE = "INVOICE";
     public static final String PARAM_USER = "USER";
-    public static final String ADMIN = "Admin";
-    public static final String NOT_ADMIN = "Not admin";
     
 }

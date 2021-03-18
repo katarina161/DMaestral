@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ps.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -220,6 +221,13 @@ public class Controller {
         RequestObject request = new RequestObject();
         request.setOperation(Operation.GENERATE_REPORT);
         request.setArgument(invoice);
+        communication.sendRequest(request);
+    }
+
+    public void setLanguage(Locale l) {
+        RequestObject request = new RequestObject();
+        request.setOperation(Operation.SET_LANGUAGE);
+        request.setArgument(l);
         communication.sendRequest(request);
     }
 

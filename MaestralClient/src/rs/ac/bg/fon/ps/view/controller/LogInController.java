@@ -6,6 +6,10 @@
 package rs.ac.bg.fon.ps.view.controller;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.User;
@@ -42,6 +46,13 @@ public class LogInController {
 
             private void logInUser(java.awt.event.ActionEvent evt) {
                 try {
+                    if (frmLogIn.getBgLanguage().getSelection() == null) {
+                        JOptionPane.showMessageDialog(frmLogIn,
+                                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.msg.LANGUAGE_MSG"),
+                                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.msg.LANGUAGE_MSG_TITLE"),
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     String username = frmLogIn.getTxtUsername().getText().trim();
                     String password = String.valueOf(frmLogIn.getTxtPassword().getPassword());
 
@@ -58,13 +69,13 @@ public class LogInController {
                 boolean errors = false;
 
                 if (username == null || username.isEmpty()) {
-                    frmLogIn.getLblUsernameError().setText("Username can not be empty.");
+                    frmLogIn.getLblUsernameError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.label.USERNAME_ERROR"));
                     frmLogIn.getTxtUsername().setText("");
                     frmLogIn.getTxtPassword().setText("");
                     errors = true;
                 }
                 if (password == null || password.isEmpty()) {
-                    frmLogIn.getLblPasswordError().setText("Passord can not be empty.");
+                    frmLogIn.getLblPasswordError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.label.PASSWORD_ERROR"));
                     frmLogIn.getTxtPassword().setText("");
                     errors = true;
                 }
@@ -80,6 +91,23 @@ public class LogInController {
             }
 
         });
+
+        frmLogIn.rbENGAddACtionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setAppLanguage(Locale.ROOT);
+                Controller.getInstance().setLanguage(Locale.ROOT);
+            }
+        });
+
+        frmLogIn.rbSRBAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Locale l = new Locale("sr", "RS");
+                setAppLanguage(l);
+                Controller.getInstance().setLanguage(l);
+            }
+        });
     }
 
     private void prepareView() {
@@ -89,19 +117,35 @@ public class LogInController {
         frmLogIn.getRootPane().setDefaultButton(frmLogIn.getBtnLogIn());
     }
 
+    private void setAppLanguage(Locale l) {
+        Locale.setDefault(l);
+        changeFrmLanguage();
+    }
+
+    private void changeFrmLanguage() {
+        ResourceBundle bundle = ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle");
+        frmLogIn.setTitle(bundle.getString("FrmLogIn.LOG_IN"));
+        frmLogIn.getLblUsername().setText(bundle.getString("FrmLogIn.label.USERNAME"));
+        frmLogIn.getLblPassword().setText(bundle.getString("FrmLogIn.label.PASSWORD"));
+        frmLogIn.getLblSelectLanguage().setText(bundle.getString("FrmLogIn.label.SELECT_LANGUAGE"));
+        frmLogIn.getBtnLogIn().setText(bundle.getString("FrmLogIn.LOG_IN"));
+    }
+
     public void logInSuccess(User user) {
         MainCordinator.getInstance().addParam(Constants.PARAM_CURRENT_USER, user);
-        
-        JOptionPane.showMessageDialog(frmLogIn, "Welcome " + user.getFirstName(),
-                "Success", JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(frmLogIn,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.msg.WELCOME") + user.getFirstName(),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.msg.SUCCESS"),
+                JOptionPane.INFORMATION_MESSAGE);
         frmLogIn.dispose();
-        
-        FormMode mode = user.isAdmin()? FormMode.FORM_ADMIN : FormMode.FORM_USER;
+
+        FormMode mode = user.isAdmin() ? FormMode.FORM_ADMIN : FormMode.FORM_USER;
         MainCordinator.getInstance().openMainForm(mode);
     }
 
     public void logInFailed(String message) {
-        JOptionPane.showMessageDialog(frmLogIn, message, "Log in Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmLogIn, message, java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmLogIn.msg.LOGIN_ERROR"), JOptionPane.ERROR_MESSAGE);
     }
 
 }

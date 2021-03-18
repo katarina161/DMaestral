@@ -6,17 +6,11 @@
 package rs.ac.bg.fon.ps.view.component;
 
 import java.awt.Desktop;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -29,7 +23,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class SaveFileChooser extends JFileChooser {
 
-    public final static int FILE_SIZE = 6022386;
+    Object[] options = {java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.YES"),
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.NO")};
 
     public SaveFileChooser() {
         super();
@@ -41,11 +36,18 @@ public class SaveFileChooser extends JFileChooser {
         if (getDialogType() == SAVE_DIALOG) {
             File selectedFile = new File(getSelectedFile().getAbsolutePath() + ".pdf");
             if (selectedFile.exists()) {
-                int response = JOptionPane.showConfirmDialog(this,
-                        "The file " + selectedFile.getName()
-                        + " already exists. Do you want to replace the existing file?",
-                        "Ovewrite file", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
+                StringBuilder sb = new StringBuilder();
+                sb.append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("pdf.EXIST_1"))
+                        .append(selectedFile.getName())
+                        .append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("pdf.EXIST_2"));
+                int response = JOptionPane.showOptionDialog(this,
+                        sb.toString(),
+                        "PDF",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 if (response != JOptionPane.YES_OPTION) {
                     return;
                 }
@@ -68,7 +70,14 @@ public class SaveFileChooser extends JFileChooser {
                 out.write(pdf);
                 out.close();
 
-                int answer = JOptionPane.showConfirmDialog(null, "Prikazi racun?", "Prikazi", JOptionPane.YES_NO_OPTION);
+                int answer = JOptionPane.showOptionDialog(null,
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("pdf.SHOW"),
+                        "PDF",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 if (answer == 0) {
                     Desktop.getDesktop().open(new File(file));
                 }

@@ -71,7 +71,10 @@ public class UserController {
                     Controller.getInstance().saveUser(user);
                 } catch (RequiredFieldsEmptyException ex) {
                     Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmUser, "Please fill out required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmUser,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REQUIRED"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REGISTER_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -116,11 +119,17 @@ public class UserController {
         frmUser.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (frmUser.getBtnSave().isVisible()) {
-                    int answer = JOptionPane.showConfirmDialog(frmUser,
-                            "Are you sure?\nChanges you made won't be saved?",
-                            "Close window",
-                            JOptionPane.YES_NO_OPTION);
+                if (frmUser.getBtnSave().isVisible() || frmUser.getBtnRegister().isVisible()) {
+                    Object[] options = {java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.YES"),
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.NO")};
+                    int answer = JOptionPane.showOptionDialog(frmUser,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.CLOSE"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.CLOSE_TITLE"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            options,
+                            options[0]);
                     if (answer == 0) {
                         frmUser.dispose();
                     }
@@ -150,7 +159,10 @@ public class UserController {
                     Controller.getInstance().updateUser(user);
                 } catch (RequiredFieldsEmptyException ex) {
                     Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmUser, "Please fill out required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmUser,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REQUIRED"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.UPDATE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -190,7 +202,10 @@ public class UserController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmUser, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmUser,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmUser.dispose();
     }
 
@@ -246,23 +261,24 @@ public class UserController {
     private void validateForm() throws RequiredFieldsEmptyException {
         resetErrors();
         boolean errors = false;
+        String err = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUsr.label.ERROR");
 
         if (frmUser.getTxtFisrtName().getText() == null || frmUser.getTxtFisrtName().getText().isEmpty()) {
-            frmUser.getLblFNameError().setText("*Required");
+            frmUser.getLblFNameError().setText(err);
             errors = true;
         }
         if (frmUser.getTxtLastName().getText() == null || frmUser.getTxtLastName().getText().isEmpty()) {
-            frmUser.getLblLNameError().setText("*Required");
+            frmUser.getLblLNameError().setText(err);
             errors = true;
         }
         if (frmUser.getTxtUsername().getText() == null || frmUser.getTxtUsername().getText().isEmpty()) {
-            frmUser.getLblUsernameError().setText("*Required");
+            frmUser.getLblUsernameError().setText(err);
             errors = true;
         }
         if (frmUser.getTxtPassword().isVisible()
                 && (String.valueOf(frmUser.getTxtPassword().getPassword()) == null
                 || String.valueOf(frmUser.getTxtPassword().getPassword()).isEmpty())) {
-            frmUser.getLblPasswordError().setText("*Required");
+            frmUser.getLblPasswordError().setText(err);
             errors = true;
         }
 
@@ -295,8 +311,8 @@ public class UserController {
     public void saveUserSuccess(User user) {
         Controller.getInstance().refreshUsersView();
         JOptionPane.showMessageDialog(frmUser,
-                "User successfully registered with id " + user.getId(),
-                "Success",
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REGISTER_SUCCESS") + user.getId(),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REGISTER_TITLE"),
                 JOptionPane.INFORMATION_MESSAGE);
 
         MainCordinator.getInstance().addParam(Constants.PARAM_USER, user);
@@ -304,17 +320,26 @@ public class UserController {
     }
 
     public void saveUserFailed(String message) {
-        JOptionPane.showMessageDialog(frmUser, "Registration failed!\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmUser,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REGISTER_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.REGISTER_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void updateSuccess(User user) {
         Controller.getInstance().refreshUsersView();
         MainCordinator.getInstance().addParam(Constants.PARAM_USER, user);
-        JOptionPane.showMessageDialog(frmUser, "User successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmUser,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.UPDATE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.UPDATE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
         setupComponents(FormMode.FORM_DETAIL);
     }
 
     public void updateFailed(String message) {
-        JOptionPane.showMessageDialog(frmUser, "An error occured. Update user failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmUser,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.UPDATE_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmUser.msg.UPDATE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 }

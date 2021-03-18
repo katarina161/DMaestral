@@ -23,7 +23,7 @@ public class AddUser extends AbstractSystemOperation {
     @Override
     protected void checkPreconditions() throws Exception {
         if (!repository.getAll(new User(), Arrays.asList("username"), Arrays.asList(user.getUsername())).isEmpty()) {
-            throw new Exception("That username is already taken.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("AddUser.ERROR"));
         }
     }
 

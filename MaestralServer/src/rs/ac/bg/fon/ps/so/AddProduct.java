@@ -24,7 +24,11 @@ public class AddProduct extends AbstractSystemOperation{
     @Override
     protected void checkPreconditions() throws Exception {
         if (repository.getByPrimaryKey(new Product(), this.product.getArticle()) != null) {
-            throw new Exception("Product with article " +product.getArticle()+ " already exist in the system.");
+            StringBuilder sb = new StringBuilder();
+            sb.append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("AddProduct.ERROR_1"))
+                    .append(product.getArticle())
+                    .append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("AddProduct.ERROR_2"));
+            throw new Exception(sb.toString());
         }
     }
 

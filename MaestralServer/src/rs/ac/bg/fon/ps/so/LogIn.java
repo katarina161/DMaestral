@@ -33,19 +33,19 @@ public class LogIn extends AbstractSystemOperation {
     protected void executeSpecificOperation() throws Exception {
         List<User> users = repository.getAll(new User());
         if (users.isEmpty()) {
-            throw new Exception("Theres no registered users in the system.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("LogIn.NO_USERS"));
         }
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user.getPassword().equals(password)) {
                     this.user = user;
                 } else {
-                    throw new IncorrectPasswordException("Incorrect password.");
+                    throw new IncorrectPasswordException(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("LogIn.INVALID_PASSWORD"));
                 }
             }
         }
         if (user == null) {
-            throw new UnknownUserException("Unknown user.");
+            throw new UnknownUserException(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("LogIn.UNKNOWN_USER"));
         }
     }
 

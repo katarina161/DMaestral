@@ -53,33 +53,34 @@ public class FrmSearchProducts extends javax.swing.JDialog {
         tblProducts = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Products");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        setTitle(bundle.getString("FrmSearchProducts.title.PRODUCTS")); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         btnAdd.setBackground(new java.awt.Color(2, 26, 126));
-        btnAdd.setFont(new java.awt.Font("Bauhaus 93", 0, 20)); // NOI18N
+        btnAdd.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setText("Add");
+        btnAdd.setText(bundle.getString("FrmSearchProducts.button.ADD")); // NOI18N
 
         btnDetails.setBackground(new java.awt.Color(2, 26, 126));
-        btnDetails.setFont(new java.awt.Font("Bauhaus 93", 0, 20)); // NOI18N
+        btnDetails.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
         btnDetails.setForeground(new java.awt.Color(255, 255, 255));
-        btnDetails.setText("Details");
+        btnDetails.setText(bundle.getString("FrmSearchProducts.button.DETAILS")); // NOI18N
 
-        jLabel1.setText("Article:");
+        jLabel1.setText(bundle.getString("FrmSearchProducts.label.ARTICLE:")); // NOI18N
 
         cmbCategories.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnSearch.setBackground(new java.awt.Color(255, 255, 255));
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(2, 26, 126));
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("FrmSearchProducts.button.SEARCH")); // NOI18N
 
         btnCancelFilter.setBackground(new java.awt.Color(255, 255, 255));
         btnCancelFilter.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnCancelFilter.setForeground(new java.awt.Color(2, 26, 126));
-        btnCancelFilter.setText("Cancel filter");
+        btnCancelFilter.setText(bundle.getString("FrmSearchProducts.button.CANCEL_FILTER")); // NOI18N
 
         tblProducts.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(

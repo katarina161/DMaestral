@@ -60,51 +60,52 @@ public class FrmMain extends javax.swing.JFrame {
         menuMain.setPreferredSize(new java.awt.Dimension(125, 40));
 
         menuProduct.setForeground(new java.awt.Color(2, 26, 126));
-        menuProduct.setText("Product");
-        menuProduct.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        menuProduct.setText(bundle.getString("FrmMain.label.PRODUCT")); // NOI18N
+        menuProduct.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
 
         miProductNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         miProductNew.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miProductNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/plus.png"))); // NOI18N
-        miProductNew.setText("New");
+        miProductNew.setText(bundle.getString("FrmMain.label.NEW")); // NOI18N
         menuProduct.add(miProductNew);
 
         miProductSearch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         miProductSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miProductSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/search.png"))); // NOI18N
-        miProductSearch.setText("Search");
+        miProductSearch.setText(bundle.getString("FrmMain.label.SEARCH")); // NOI18N
         menuProduct.add(miProductSearch);
 
         menuMain.add(menuProduct);
 
         menuInvoice.setForeground(new java.awt.Color(2, 26, 126));
-        menuInvoice.setText("Invoice");
-        menuInvoice.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        menuInvoice.setText(bundle.getString("FrmMain.label.INVOICE")); // NOI18N
+        menuInvoice.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
 
         miInvoiceNew.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miInvoiceNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice.png"))); // NOI18N
-        miInvoiceNew.setText("Create");
+        miInvoiceNew.setText(bundle.getString("FrmMain.label.CREATE")); // NOI18N
         menuInvoice.add(miInvoiceNew);
 
         miInvoiceSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miInvoiceSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-search.png"))); // NOI18N
-        miInvoiceSearch.setText("Search");
+        miInvoiceSearch.setText(bundle.getString("FrmMain.label.SEARCH")); // NOI18N
         menuInvoice.add(miInvoiceSearch);
 
         menuMain.add(menuInvoice);
 
         menuEmployer.setForeground(new java.awt.Color(2, 26, 126));
-        menuEmployer.setText("Employee");
-        menuEmployer.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        menuEmployer.setText(bundle.getString("FrmMain.label.EMPLOYEE")); // NOI18N
+        menuEmployer.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
 
         miEmployerNew.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miEmployerNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/register.png"))); // NOI18N
-        miEmployerNew.setText("Register");
+        miEmployerNew.setText(bundle.getString("FrmMain.label.REGISTER")); // NOI18N
         menuEmployer.add(miEmployerNew);
 
         miEmployerSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miEmployerSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/search.png"))); // NOI18N
-        miEmployerSearch.setText("Search");
+        miEmployerSearch.setText(bundle.getString("FrmMain.label.SEARCH")); // NOI18N
         menuEmployer.add(miEmployerSearch);
 
         menuMain.add(menuEmployer);
@@ -114,7 +115,7 @@ public class FrmMain extends javax.swing.JFrame {
 
         miLogOut.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         miLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/logout.png"))); // NOI18N
-        miLogOut.setText("Log out");
+        miLogOut.setText(bundle.getString("FrmMain.label.LOG_OUT")); // NOI18N
         menuUser.add(miLogOut);
 
         menuMain.add(menuUser);

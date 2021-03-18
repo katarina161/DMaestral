@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -54,7 +53,8 @@ public class FrmSearchUsers extends javax.swing.JDialog {
         btnDetails = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Users");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        setTitle(bundle.getString("FrmSearchUsers.title.USERS")); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -72,12 +72,12 @@ public class FrmSearchUsers extends javax.swing.JDialog {
 
         btnSearch.setBackground(new java.awt.Color(255, 255, 255));
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/search.png"))); // NOI18N
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("FrmSearchUsers.button.SEARCH")); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Employees");
+        jLabel2.setText(bundle.getString("FrmSearchUsers.label.EMPLOYEES")); // NOI18N
 
         lblCancelFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/x-button.png"))); // NOI18N
 
@@ -134,7 +134,7 @@ public class FrmSearchUsers extends javax.swing.JDialog {
         btnDetails.setBackground(new java.awt.Color(255, 255, 255));
         btnDetails.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnDetails.setForeground(new java.awt.Color(101, 149, 224));
-        btnDetails.setText("Details");
+        btnDetails.setText(bundle.getString("FrmSearchUsers.button.DETAILS")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,7 +156,7 @@ public class FrmSearchUsers extends javax.swing.JDialog {
                 .addComponent(tblScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDetails)
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

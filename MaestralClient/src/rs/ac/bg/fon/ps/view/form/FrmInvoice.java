@@ -86,19 +86,20 @@ public class FrmInvoice extends javax.swing.JDialog {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Invoice");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        setTitle(bundle.getString("FrmInvoice.title.INVOICE")); // NOI18N
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         cbCanceled.setBackground(new java.awt.Color(255, 255, 255));
         cbCanceled.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        cbCanceled.setText("Canceled");
+        cbCanceled.setText(bundle.getString("FrmInvoice.cb.CANCELED")); // NOI18N
         cbCanceled.setEnabled(false);
 
         cbProcessed.setBackground(new java.awt.Color(255, 255, 255));
         cbProcessed.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        cbProcessed.setText("Processed");
+        cbProcessed.setText(bundle.getString("FrmInvoice.cb.PROCESSED")); // NOI18N
         cbProcessed.setEnabled(false);
 
         panelInvoice.setBackground(new java.awt.Color(101, 149, 224));
@@ -113,25 +114,25 @@ public class FrmInvoice extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Invoice");
+        jLabel2.setText(bundle.getString("FrmInvoice.label.INVOICE")); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Invoice number:");
+        jLabel3.setText(bundle.getString("FrmInvoice.label.INVOICE_NUMBER")); // NOI18N
 
         txtNumber.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtNumber.setDisabledTextColor(new java.awt.Color(51, 51, 51));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Date:");
+        jLabel4.setText(bundle.getString("FrmInvoice.label.DATE")); // NOI18N
 
         txtDate.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtDate.setDisabledTextColor(new java.awt.Color(51, 51, 51));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Partner:");
+        jLabel5.setText(bundle.getString("FrmInvoice.label.PARTNER")); // NOI18N
 
         txtPartner.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtPartner.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -142,7 +143,7 @@ public class FrmInvoice extends javax.swing.JDialog {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 3, 13)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Created by");
+        jLabel13.setText(bundle.getString("FrmInvoice.label.CREATED_BY")); // NOI18N
 
         javax.swing.GroupLayout panelInvoiceLayout = new javax.swing.GroupLayout(panelInvoice);
         panelInvoice.setLayout(panelInvoiceLayout);
@@ -229,39 +230,39 @@ public class FrmInvoice extends javax.swing.JDialog {
         btnRemoveItem.setBackground(new java.awt.Color(204, 0, 0));
         btnRemoveItem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRemoveItem.setForeground(new java.awt.Color(255, 255, 255));
-        btnRemoveItem.setText("Remove item");
+        btnRemoveItem.setText(bundle.getString("FrmInvoice.button.REMOVE_ITEM")); // NOI18N
 
         panelItem.setBackground(new java.awt.Color(255, 255, 255));
-        panelItem.setBorder(javax.swing.BorderFactory.createTitledBorder("Invoice item"));
+        panelItem.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("FrmInvoice.border.TITLE"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel6.setText("Product:");
+        jLabel6.setText(bundle.getString("FrmInvoice.label.PRODUCT")); // NOI18N
 
         cmbProducts.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         cmbProducts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbProducts.setSelectedIndex(-1);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel7.setText("Size:");
+        jLabel7.setText(bundle.getString("FrmInvoice.label.SIZE")); // NOI18N
 
         cmbSizes.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         cmbSizes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbSizes.setSelectedIndex(-1);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel8.setText("Price:");
+        jLabel8.setText(bundle.getString("FrmInvoice.label.PRICE")); // NOI18N
 
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel9.setText("Quantity:");
+        jLabel9.setText(bundle.getString("FrmInvoice.label.QUANTITY")); // NOI18N
 
         txtQuantity.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         btnAddItem.setBackground(new java.awt.Color(92, 181, 62));
         btnAddItem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAddItem.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddItem.setText("Add");
+        btnAddItem.setText(bundle.getString("FrmInvoice.button.ADD")); // NOI18N
 
         lblAddItemError.setForeground(new java.awt.Color(204, 0, 0));
 
@@ -319,16 +320,16 @@ public class FrmInvoice extends javax.swing.JDialog {
         btnSave.setBackground(new java.awt.Color(204, 204, 204));
         btnSave.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-save.png"))); // NOI18N
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("FrmInvoice.button.SAVE")); // NOI18N
 
         btnClose.setBackground(new java.awt.Color(204, 204, 204));
         btnClose.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        btnClose.setText("Close");
+        btnClose.setText(bundle.getString("FrmInvoice.button.CLOSE")); // NOI18N
 
         btnCancel.setBackground(new java.awt.Color(204, 204, 204));
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-cancel.png"))); // NOI18N
-        btnCancel.setText("Cancel Invoice");
+        btnCancel.setText(bundle.getString("FrmInvoice.button.CANCEL_INVOICE")); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(176, 204, 247));
 
@@ -336,7 +337,7 @@ public class FrmInvoice extends javax.swing.JDialog {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("TOTAL");
+        jLabel10.setText(bundle.getString("FrmInvoice.label.TOTAL")); // NOI18N
 
         lblTotal.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 255, 255));
@@ -345,7 +346,7 @@ public class FrmInvoice extends javax.swing.JDialog {
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("din");
+        jLabel11.setText("RSD");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -376,7 +377,7 @@ public class FrmInvoice extends javax.swing.JDialog {
         );
 
         lblPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/pdf.png"))); // NOI18N
-        lblPDF.setToolTipText("Download PDF");
+        lblPDF.setToolTipText(bundle.getString("FrmInvoice.tip.PDF")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -401,17 +402,17 @@ public class FrmInvoice extends javax.swing.JDialog {
         btnEdit.setBackground(new java.awt.Color(204, 204, 204));
         btnEdit.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-edit.png"))); // NOI18N
-        btnEdit.setText("Edit Invoice");
+        btnEdit.setText(bundle.getString("FrmInvoice.button.EDIT_INVOICE")); // NOI18N
 
         btnProcess.setBackground(new java.awt.Color(204, 204, 204));
         btnProcess.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnProcess.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-process.png"))); // NOI18N
-        btnProcess.setText("Process");
+        btnProcess.setText(bundle.getString("FrmInvoice.button.PROCESS")); // NOI18N
 
         btnDelete.setBackground(new java.awt.Color(204, 204, 204));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rs/ac/bg/fon/ps/view/image/invoice-delete.png"))); // NOI18N
-        btnDelete.setText("Delete");
+        btnDelete.setText(bundle.getString("FrmInvoice.button.DELETE")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -536,7 +537,7 @@ public class FrmInvoice extends javax.swing.JDialog {
 
     private void prepareView() {
         JTableHeader header = tblItems.getTableHeader();
-        header.setBackground(new Color(101,149,224));
+        header.setBackground(new Color(101, 149, 224));
         header.setForeground(Color.white);
         header.setFont(new Font("Tahoma", Font.BOLD, 15));
         tblScroll.getViewport().setBackground(Color.white);
@@ -673,5 +674,5 @@ public class FrmInvoice extends javax.swing.JDialog {
     public void lblPDFAddMouseListener(MouseAdapter mouseAdapter) {
         lblPDF.addMouseListener(mouseAdapter);
     }
-    
+
 }

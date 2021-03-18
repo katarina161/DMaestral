@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ps.thread;
 
 import java.net.Socket;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.controller.Controller;
@@ -169,6 +170,10 @@ public class ClientThread extends Thread {
                             Invoice invoiceReport = (Invoice) request.getArgument();
                             byte[] report = Controller.getInstance().generateReport(invoiceReport);
                             response.setResult(report);
+                            break;
+                        case SET_LANGUAGE:
+                            Locale l = (Locale) request.getArgument();
+                            Locale.setDefault(l);
                             break;
                     }
                 } catch (Exception e) {

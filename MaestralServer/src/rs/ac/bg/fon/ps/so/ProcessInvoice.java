@@ -22,7 +22,11 @@ public class ProcessInvoice extends AbstractSystemOperation{
     @Override
     protected void checkPreconditions() throws Exception {
         if (((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isProcessed()) {
-            throw new Exception("Invoice (" +invoice.getNumber()+ ") is already processed!");
+            StringBuilder sb = new StringBuilder();
+            sb.append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ProcessInvoice.ERROR_1"))
+                    .append(invoice.getNumber())
+                    .append(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ProcessInvoice.ERROR_2"));
+            throw new Exception(sb.toString());
         }
     }
 

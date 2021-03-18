@@ -116,7 +116,7 @@ public class Controller {
     
     public User logIn(String username, String password) throws Exception {
         if (onlineUsers.contains(new User(username, password))) {
-            throw new Exception("That user is already connected");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("LogIn.ALREADY_CONNECTED"));
         }
         AbstractSystemOperation so = new LogIn(username, password);
         so.executeOperation();

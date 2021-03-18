@@ -24,10 +24,10 @@ public class CancelInvoice extends AbstractSystemOperation{
     @Override
     protected void checkPreconditions() throws Exception {
         if (!((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isProcessed()) {
-            throw new Exception("You cannot cancel an invoice that is not processed.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("CancelInvoice.NOT_PROCESSED"));
         }
         if (((Invoice)repository.getByPrimaryKey(new Invoice(), invoice.getId())).isCanceled()) {
-            throw new Exception("This invoice is already cancel.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("CancelInvoice.ALREADY_CANCELED"));
         }
     }
 

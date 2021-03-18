@@ -10,7 +10,6 @@ import java.util.List;
 import rs.ac.bg.fon.ps.domain.InvoiceItem;
 import rs.ac.bg.fon.ps.domain.Product;
 import rs.ac.bg.fon.ps.domain.ProductSize;
-import rs.ac.bg.fon.ps.domain.Size;
 
 /**
  *
@@ -27,7 +26,7 @@ public class DeleteProduct extends AbstractSystemOperation{
     @Override
     protected void checkPreconditions() throws Exception {
         if (!repository.getAll(new InvoiceItem(), Arrays.asList("product_article"), Arrays.asList(product.getArticle())).isEmpty()) {
-            throw new Exception("You cannot delete a product for which an invoice has been made.");
+            throw new Exception(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("DeleteProduct.ERROR"));
         }
     }
 

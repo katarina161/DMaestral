@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -50,8 +51,8 @@ public class SearchInvoicesController {
                 int row = frmSearchInvoices.getTblInvoices().getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(frmSearchInvoices,
-                            "Select an invoice from the table\n for which you want to see details.",
-                            "Error",
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.SEARCH_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.SEARCH_TITLE"),
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
@@ -75,7 +76,7 @@ public class SearchInvoicesController {
                 String number = frmSearchInvoices.getTxtSearchNumber().getText().trim();
                 String partner = frmSearchInvoices.getTxtSearchPartner().getText().trim();
                 Date date = frmSearchInvoices.getjDateChooser().getDate();
-                InvoiceFilter status = (InvoiceFilter) frmSearchInvoices.getCmbFilter().getSelectedItem();
+                String status = (String) frmSearchInvoices.getCmbFilter().getSelectedItem();
 
                 if (!number.isEmpty()) {
                     columns.add("number");
@@ -90,19 +91,15 @@ public class SearchInvoicesController {
                     values.add(new java.sql.Date(date.getTime()));
                 }
                 if (status != null) {
-                    switch (status) {
-                        case Canceled:
-                            columns.add("canceled");
-                            values.add(true);
-                            break;
-                        case Processed:
-                            columns.add("processed");
-                            values.add(true);
-                            break;
-                        case Unprocessed:
-                            columns.add("processed");
-                            values.add(false);
-                            break;
+                    if (status.equals(InvoiceFilter.CANCELED)) {
+                        columns.add("canceled");
+                        values.add(true);
+                    } else if (status.equals(InvoiceFilter.PROCESSED)) {
+                        columns.add("processed");
+                        values.add(true);
+                    } else if (status.equals(InvoiceFilter.UNPROCESSED)) {
+                        columns.add("processed");
+                        values.add(false);
                     }
                 }
 
@@ -133,6 +130,7 @@ public class SearchInvoicesController {
     public void openForm() {
         frmSearchInvoices.setLocationRelativeTo(parent);
         frmSearchInvoices.setResizable(false);
+        frmSearchInvoices.getContentPane().setBackground(Color.WHITE);
         prepareView();
         try {
             Thread.sleep(1000);
@@ -149,7 +147,7 @@ public class SearchInvoicesController {
 
     private void fillCmbFiter() {
         frmSearchInvoices.getCmbFilter().removeAllItems();
-        for (InvoiceFilter filter : InvoiceFilter.values()) {
+        for (String filter : InvoiceFilter.getAllConstants()) {
             frmSearchInvoices.getCmbFilter().addItem(filter);
         }
     }
@@ -164,7 +162,10 @@ public class SearchInvoicesController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmSearchInvoices, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchInvoices,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmSearchInvoices.dispose();
     }
 
@@ -179,7 +180,7 @@ public class SearchInvoicesController {
         String number = frmSearchInvoices.getTxtSearchNumber().getText().trim();
         String partner = frmSearchInvoices.getTxtSearchPartner().getText().trim();
         Date date = frmSearchInvoices.getjDateChooser().getDate();
-        InvoiceFilter status = (InvoiceFilter) frmSearchInvoices.getCmbFilter().getSelectedItem();
+        String status = (String) frmSearchInvoices.getCmbFilter().getSelectedItem();
 
         if (!number.isEmpty()) {
             columns.add("number");
@@ -194,19 +195,15 @@ public class SearchInvoicesController {
             values.add(new java.sql.Date(date.getTime()));
         }
         if (status != null) {
-            switch (status) {
-                case Canceled:
-                    columns.add("canceled");
-                    values.add(true);
-                    break;
-                case Processed:
-                    columns.add("processed");
-                    values.add(true);
-                    break;
-                case Unprocessed:
-                    columns.add("processed");
-                    values.add(false);
-                    break;
+            if (status.equals(InvoiceFilter.CANCELED)) {
+                columns.add("canceled");
+                values.add(true);
+            } else if (status.equals(InvoiceFilter.PROCESSED)) {
+                columns.add("processed");
+                values.add(true);
+            } else if (status.equals(InvoiceFilter.UNPROCESSED)) {
+                columns.add("processed");
+                values.add(false);
             }
         }
 
@@ -222,12 +219,18 @@ public class SearchInvoicesController {
         InvoiceTableModel model = (InvoiceTableModel) frmSearchInvoices.getTblInvoices().getModel();
         model.setInvoices(invoices);
         if (invoices.isEmpty()) {
-            JOptionPane.showMessageDialog(frmSearchInvoices, "No matching invoices fonud!", "Search", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frmSearchInvoices,
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.NO_INVOICES"),
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.SEARCH_TITLE"),
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void filterInvoicesFailed(String message) {
-        JOptionPane.showMessageDialog(frmSearchInvoices, "Error occurred while filtering.\n"+message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchInvoices,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.FILTER_ERROR"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.msg.SEARCH_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }

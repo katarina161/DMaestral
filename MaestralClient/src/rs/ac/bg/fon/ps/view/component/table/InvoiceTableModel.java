@@ -19,7 +19,12 @@ public class InvoiceTableModel extends AbstractTableModel{
     private final SimpleDateFormat SDF = new SimpleDateFormat("dd.MM.yyyy");
     
     private List<Invoice> invoices;
-    private final String[] columnNames = new String[]{"Number", "Partner", "Date", "Processed", "Canceled"};
+    private final String[] columnNames = new String[]{
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.table.NUMBER"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.table.PARTNER"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.table.DATE"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.table.PROCESSED"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchInvoices.table.CANCELED")};
     private final Class[] columnClasses = new Class[]{String.class, String.class, String.class, Boolean.class, Boolean.class};
 
     public InvoiceTableModel(List<Invoice> invoices) {

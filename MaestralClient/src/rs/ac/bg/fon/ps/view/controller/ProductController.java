@@ -5,6 +5,7 @@
  */
 package rs.ac.bg.fon.ps.view.controller;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,13 +58,17 @@ public class ProductController {
                     validateForm();
 
                     Product product = makeProductFromForm();
+                    if (frmProduct.getTxtPriceWithVAT().getText().isEmpty()) {
+                        return;
+                    }
                     Controller.getInstance().addProduct(product);
 
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frmProduct, "Please fill out required fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmProduct,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.REQUIRED"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.SAVE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -91,21 +96,32 @@ public class ProductController {
 
             private void update() {
                 try {
-                    int answer = JOptionPane.showConfirmDialog(frmProduct,
-                            "Are you sure you want to make this changes",
-                            "Change product",
-                            JOptionPane.YES_NO_OPTION);
+                    Object[] options = {java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.YES"),
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.NO")};
+                    int answer = JOptionPane.showOptionDialog(frmProduct,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_TITLE"),
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, //do not use a custom Icon
+                            options, //the titles of buttons
+                            options[0]); //default button title
+
                     if (answer == 0) {
                         validateForm();
 
                         Product product = makeProductFromForm();
+                        if (frmProduct.getTxtPriceWithVAT().getText().isEmpty()) {
+                            return;
+                        }
                         Controller.getInstance().updateProduct(product);
                     }
                 } catch (RequiredFieldsEmptyException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(frmProduct, "Please fill out the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmProduct,
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.REQUIRED"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_TITLE"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -117,8 +133,16 @@ public class ProductController {
             }
 
             private void delete() {
-                int answer = JOptionPane.showConfirmDialog(frmProduct, "Are you sure you want to delete this product?",
-                        "Confirm", JOptionPane.YES_NO_OPTION);
+                Object[] options = {java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.YES"),
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("JOP.NO")};
+                int answer = JOptionPane.showOptionDialog(frmProduct,
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE"),
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE_TITLE"),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 if (answer == 0) {
                     Product product = makeProductFromForm();
                     Controller.getInstance().deleteProduct(product);
@@ -175,6 +199,7 @@ public class ProductController {
         fillCmbCategory();
         fillCmbSize();
         fillDefaultValues();
+        frmProduct.getContentPane().setBackground(Color.WHITE);
         setupComponents(formMode);
     }
 
@@ -193,7 +218,7 @@ public class ProductController {
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
-                frmProduct.setTitle("Add new Product");
+                frmProduct.setTitle(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.title.NEW_PRODUCT"));
                 frmProduct.getBtnSave().setVisible(true);
                 frmProduct.getBtnReset().setVisible(true);
                 frmProduct.getBtnRevert().setVisible(false);
@@ -202,7 +227,7 @@ public class ProductController {
                 break;
             case FORM_DETAIL:
                 boolean admin = ((User) MainCordinator.getInstance().getParam(Constants.PARAM_CURRENT_USER)).isAdmin();
-                frmProduct.setTitle("Product Details");
+                frmProduct.setTitle(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.title.PRODUCT_DETAILS"));
                 frmProduct.getBtnSave().setVisible(false);
                 frmProduct.getBtnReset().setVisible(false);
                 setEditable(admin);
@@ -255,7 +280,7 @@ public class ProductController {
         frmProduct.getTxtPriceWithVAT().setText(String.valueOf(product.getPriceWithVAT().setScale(2, RoundingMode.HALF_UP).doubleValue()));
     }
 
-    private Product makeProductFromForm() throws NumberFormatException {
+    private Product makeProductFromForm() {
         Product product = new Product();
         product.setArticle(Long.parseLong(frmProduct.getTxtArticle().getText().trim()));
         product.setName(frmProduct.getTxtName().getText().trim());
@@ -295,23 +320,23 @@ public class ProductController {
         boolean errors = false;
 
         if (frmProduct.getTxtArticle().getText() == null || frmProduct.getTxtArticle().getText().isEmpty()) {
-            frmProduct.getLblArticleError().setText("Required!");
+            frmProduct.getLblArticleError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.label.ERROR"));
             errors = true;
         }
         if (frmProduct.getTxtName().getText() == null || frmProduct.getTxtName().getText().isEmpty()) {
-            frmProduct.getLblNameError().setText("Required!");
+            frmProduct.getLblNameError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.label.ERROR"));
             errors = true;
         }
         if (frmProduct.getCmbCategory().getSelectedIndex() == -1) {
-            frmProduct.getLblCategoryError().setText("Required!");
+            frmProduct.getLblCategoryError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.label.ERROR"));
             errors = true;
         }
         if (getSelectedSizes() == null || getSelectedSizes().isEmpty()) {
-            frmProduct.getLblSizeError().setText("Required!");
+            frmProduct.getLblSizeError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.label.ERROR"));
             errors = true;
         }
         if (frmProduct.getTxtPriceWithoutVAT().getText() == null || frmProduct.getTxtPriceWithoutVAT().getText().isEmpty()) {
-            frmProduct.getLblPriceWithoutWatError().setText("Required!");
+            frmProduct.getLblPriceWithoutWatError().setText(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.label.ERROR"));
             errors = true;
         }
 
@@ -339,7 +364,10 @@ public class ProductController {
             return priceWith;
         } catch (NumberFormatException | NegativePriceException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(frmProduct, "Price must be a positive number!", "Price Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frmProduct,
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.PRICE_ERROR"),
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
             return null;
         } catch (Exception ex) {
             Logger.getLogger(FrmProduct.class.getName()).log(Level.SEVERE, null, ex);
@@ -365,7 +393,10 @@ public class ProductController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmProduct, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmProduct.dispose();
     }
 
@@ -378,30 +409,48 @@ public class ProductController {
 
     public void saveProductSuccess() {
         resetForm();
-        JOptionPane.showMessageDialog(frmProduct, "Product successfully saved!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.SAVE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.SAVE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
         Controller.getInstance().refreshProductsView();
     }
 
     public void saveProductFailed(String message) {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Save product failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.SAVE_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.SAVE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void updateProductSuccess() {
         Controller.getInstance().refreshProductsView();
-        JOptionPane.showMessageDialog(frmProduct, "Product successfully updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void updateProductFailed() {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Update product failed.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_ERROR"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.UPDATE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     public void deleteProductSuccess() {
         Controller.getInstance().refreshProductsView();
-        JOptionPane.showMessageDialog(frmProduct, "Product successfully deleted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE_SUCCESS"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE_TITLE"),
+                JOptionPane.INFORMATION_MESSAGE);
         frmProduct.dispose();
     }
 
     public void deleteProductFailed(String message) {
-        JOptionPane.showMessageDialog(frmProduct, "Error occured. Delete product failed.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmProduct,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE_ERROR") + message,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmProduct.msg.DELETE_TITLE"),
+                JOptionPane.ERROR_MESSAGE);
     }
 }

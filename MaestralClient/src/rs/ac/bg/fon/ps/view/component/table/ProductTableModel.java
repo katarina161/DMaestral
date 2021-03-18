@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.Category;
 import rs.ac.bg.fon.ps.domain.Product;
 
@@ -18,7 +17,11 @@ import rs.ac.bg.fon.ps.domain.Product;
  * @author Katarina
  */
 public class ProductTableModel extends AbstractTableModel {
-    private final String[] columnNames = new String[]{"Article", "Name", "Category", "Price"};
+    private final String[] columnNames = new String[]{
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.table.ARTICLE"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.table.NAME"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.table.CATEGORY"),
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.table.PRICE")};
     private final Class[] columnClasses = new Class[]{Long.class, String.class, Category.class, BigDecimal.class};
     private List<Product> products;
 

@@ -20,6 +20,7 @@ import rs.ac.bg.fon.ps.controller.Controller;
 import rs.ac.bg.fon.ps.domain.User;
 import rs.ac.bg.fon.ps.view.component.table.UserTableModel;
 import rs.ac.bg.fon.ps.view.constant.Constants;
+import rs.ac.bg.fon.ps.view.constant.UserFilter;
 import rs.ac.bg.fon.ps.view.cordinator.MainCordinator;
 import rs.ac.bg.fon.ps.view.form.FrmSearchUsers;
 
@@ -74,8 +75,8 @@ public class SearchUsersController {
                 int row = frmSearchUsers.getTblUsers().getSelectedRow();
                 if (row == -1) {
                     JOptionPane.showMessageDialog(frmSearchUsers,
-                            "Please select an employee.",
-                            "Error",
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchUsers.msg.SEARCH_ERROR"),
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchUsers.msg.SEARCH_TITLE"),
                             JOptionPane.ERROR_MESSAGE);
                 } else {
                     UserTableModel model = (UserTableModel) frmSearchUsers.getTblUsers().getModel();
@@ -114,15 +115,18 @@ public class SearchUsersController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmSearchUsers, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchUsers,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmSearchUsers.dispose();
     }
 
     private void fillCmbAdmin() {
         frmSearchUsers.getCmbAdmin().removeAllItems();
-        frmSearchUsers.getCmbAdmin().addItem("All");
-        frmSearchUsers.getCmbAdmin().addItem(Constants.ADMIN);
-        frmSearchUsers.getCmbAdmin().addItem(Constants.NOT_ADMIN);
+        for (String filter : UserFilter.getAllConstants()) {
+            frmSearchUsers.getCmbAdmin().addItem(filter);
+        }
     }
 
     private void searchUsers(List<User> users) {
@@ -135,15 +139,12 @@ public class SearchUsersController {
             columns.add("name");
             values.add(text);
         }
-        switch (admin) {
-            case Constants.ADMIN:
-                columns.add("admin");
-                values.add(true);
-                break;
-            case Constants.NOT_ADMIN:
-                columns.add("admin");
-                values.add(false);
-                break;
+        if (admin.equals(UserFilter.ADMIN)) {
+            columns.add("admin");
+            values.add(true);
+        } else if (admin.equals(UserFilter.NOT_ADMIN)) {
+            columns.add("admin");
+            values.add(false);
         }
         if (!columns.isEmpty()) {
             Controller.getInstance().getFilteredUsers(columns, values);

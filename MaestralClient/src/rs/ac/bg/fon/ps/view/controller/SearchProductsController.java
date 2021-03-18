@@ -5,9 +5,9 @@
  */
 package rs.ac.bg.fon.ps.view.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -74,7 +74,10 @@ public class SearchProductsController {
                     MainCordinator.getInstance().addParam(Constants.PARAM_PRODUCT, selectedProduct);
                     MainCordinator.getInstance().openProductDetailsForm();
                 } else {
-                    JOptionPane.showMessageDialog(frmSearchProducts, "You must select a product.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmSearchProducts, 
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_ERROR"), 
+                            java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_TITLE"), 
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -107,6 +110,7 @@ public class SearchProductsController {
     private void prepareView() {
         gatherDataForTblProducts();
         Controller.getInstance().getAllCategories();
+        frmSearchProducts.getContentPane().setBackground(Color.WHITE);
         setupComponents();
     }
 
@@ -139,13 +143,16 @@ public class SearchProductsController {
     }
 
     public void viewInitialisationFailed() {
-        JOptionPane.showMessageDialog(frmSearchProducts, "View initialisation failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchProducts,
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("INITIALIZATION_FAILED"),
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("ERROR"),
+                JOptionPane.ERROR_MESSAGE);
         frmSearchProducts.dispose();
     }
 
     public void fillCategories(List<Category> categories) {
         frmSearchProducts.getCmbCategories().removeAllItems();
-        frmSearchProducts.getCmbCategories().addItem("All");
+        frmSearchProducts.getCmbCategories().addItem(java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FILTER_ALL"));
         for (Category category : categories) {
             frmSearchProducts.getCmbCategories().addItem(category);
         }
@@ -163,7 +170,11 @@ public class SearchProductsController {
                 columns.add("article");
                 values.add(article);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(frmSearchProducts, "Article must be a number.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frmSearchProducts, 
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_ARTICLE_ERROR"), 
+                        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_TITLE"), 
+                        JOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
 
@@ -187,12 +198,18 @@ public class SearchProductsController {
         ProductTableModel model = (ProductTableModel) frmSearchProducts.getTblProducts().getModel();
         model.setProducts(products);
         if (products.isEmpty()) {
-            JOptionPane.showMessageDialog(frmSearchProducts, "No matching products found!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frmSearchProducts, 
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.NO_PRODUCTS"), 
+                    java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_TITLE"), 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void filterProductsFailed(String message) {
-        JOptionPane.showMessageDialog(frmSearchProducts, "Error occurred while filtering.\n" + message, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmSearchProducts, 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.FILTER_ERROR"), 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmSearchProducts.msg.SEARCH_TITLE"), 
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }

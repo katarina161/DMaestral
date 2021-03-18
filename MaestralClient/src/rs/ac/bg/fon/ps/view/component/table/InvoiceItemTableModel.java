@@ -19,7 +19,12 @@ import rs.ac.bg.fon.ps.domain.Product;
  */
 public class InvoiceItemTableModel extends AbstractTableModel {
     
-    private final String[] columnNames = new String[]{"Order No.", "Product", "Size", "Price", "Quantity"};
+    private final String[] columnNames = new String[]{
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.table.ORDER_NUMBER"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.table.PRODUCT"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.table.SIZE"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.table.PRICE"), 
+        java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmInvoice.table.QUANTITY")};
     private final Class[] columnClasses = new Class[]{Integer.class, Product.class, Integer.class, BigDecimal.class, Integer.class};
     private Invoice invoice;
     

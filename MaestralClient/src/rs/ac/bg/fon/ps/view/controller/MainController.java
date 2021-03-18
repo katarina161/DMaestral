@@ -131,12 +131,18 @@ public class MainController {
     public void logOutSuccess() {
         MainCordinator.getInstance().removeParams();
         frmMain.dispose();
-        JOptionPane.showMessageDialog(null, "You have successfully logged out!", "Log out", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmMain.msg.LOGOUT_SUCCESS"), 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmMain.msg.LOGOUT"), 
+                JOptionPane.INFORMATION_MESSAGE);
         MainCordinator.getInstance().openLogInForm();
     }
 
     public void logOutFailed() {
-        JOptionPane.showMessageDialog(frmMain, "Error! Log out failed!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frmMain, 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmMain.msg.LOGOUT_ERROR"), 
+                java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle").getString("FrmMain.msg.LOGOUT"), 
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }

@@ -38,4 +38,5 @@ public enum Operation implements Serializable{
     GET_ALL_SIZES,
     GENERATE_INVOICE_NUMBER,
     GENERATE_REPORT,
+    SET_LANGUAGE
 }

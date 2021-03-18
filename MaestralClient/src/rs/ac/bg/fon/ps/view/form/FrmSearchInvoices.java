@@ -57,7 +57,8 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         btnDetails = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Invoices");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("rs/ac/bg/fon/ps/resources/Bundle"); // NOI18N
+        setTitle(bundle.getString("FrmSearchInvoices.title.INVOICES")); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -78,10 +79,10 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         cmbFilter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         btnSearch.setBackground(new java.awt.Color(255, 255, 255));
-        btnSearch.setText("Search");
+        btnSearch.setText(bundle.getString("FrmSearchInvoices.button.SEARCH")); // NOI18N
 
         btnCancelFilter.setBackground(new java.awt.Color(255, 255, 255));
-        btnCancelFilter.setText("Cancel Filter");
+        btnCancelFilter.setText(bundle.getString("FrmSearchInvoices.button.CANCEL_FILTER")); // NOI18N
 
         txtSearchPartner.setBackground(new java.awt.Color(101, 149, 224));
         txtSearchPartner.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -96,11 +97,11 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
 
         jLabel1.setBackground(new java.awt.Color(101, 149, 224));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Invoice number");
+        jLabel1.setText(bundle.getString("FrmSearchInvoices.label.INVOICE_NUMBER")); // NOI18N
 
         jLabel2.setBackground(new java.awt.Color(101, 149, 224));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Partner");
+        jLabel2.setText(bundle.getString("FrmSearchInvoices.label.PARTNER")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -180,7 +181,7 @@ public class FrmSearchInvoices extends javax.swing.JDialog {
         btnDetails.setBackground(new java.awt.Color(101, 149, 224));
         btnDetails.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         btnDetails.setForeground(new java.awt.Color(255, 255, 255));
-        btnDetails.setText("See Details");
+        btnDetails.setText(bundle.getString("FrmSearchInvoices.button.SEE_DETAILS")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
